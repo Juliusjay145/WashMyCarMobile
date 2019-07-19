@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_buttons"
+    tools:context=".MainActivity" >
+    <requestFocus />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-250dp"
+        android:src="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/editText4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/rounded_buttons2"
+        android:drawableStart="@drawable/accounts"
+        android:drawableLeft="@drawable/accounts"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="text"
+        android:paddingLeft="10dp"
+        android:textColor="#fefefe"
+        android:textColorHint="#fefefe"
+        android:textColorLink="#fefefe" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="144dp"
+        android:background="@drawable/rounded_buttons2"
+        android:drawableStart="@drawable/locks"
+        android:drawableLeft="@drawable/locks"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#fefefe"
+        android:textColorHint="#fefefe"
+        android:textColorLink="#fefefe" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/editText4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:background="@drawable/rounded_buttons2"
+        android:text="Login"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#fefefe"
+        android:textColorHint="#fefefe"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

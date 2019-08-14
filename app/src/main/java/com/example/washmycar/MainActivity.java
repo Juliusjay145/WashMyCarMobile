@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLogin.setOnClickListener(this);
 
 
+
     }
 
     @Override
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String password = pass.getText().toString();
         //192.168.43.19
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwashseeker");
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwashseeker");
+            URL url = new URL("http://192.168.254.106/WashMyCar/Project/Model/mobile_seeker_profile.php");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("myprofile");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
                 final String user_name = item.getString("seeker_email");
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //String client_name = item.getString("cust_name");
                 if(username.equals(user_name) && password.equals(user_pass))
                 {
+                    Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor=pref.edit();
                     editor.putString("user", username);
                     editor.putString("pass", password);
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     user.setText("");
                     pass.setText("");
                 }else{
+                    Toast.makeText(this,"False",Toast.LENGTH_SHORT).show();
                     user.setText("");
                     pass.setText("");
                 }

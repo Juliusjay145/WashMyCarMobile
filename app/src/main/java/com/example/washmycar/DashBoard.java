@@ -3,10 +3,14 @@ package com.example.washmycar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +34,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
     SharedPreferences prf;
     ArrayList<CompanyList> list = new ArrayList<>();
     CompanyAdapter adapter;
+    private MenuItem item;
 
 
     @Override
@@ -42,8 +47,15 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
 
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
+        StrictMode.setThreadPolicy(policy);
+
+
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwash_station");
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.254.106/WashMyCar/Project/Model/mobile_seeker_profile.php");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -83,4 +95,34 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 //        startActivityForResult(intent, 1);
 
     }
+
+
+    //menus
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.commonmenus,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.item = item;
+        int id = item.getItemId();
+        if (id==R.id.home){
+            Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.settings){
+            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,SeekerProfile.class));
+        }
+        else
+        if (id==R.id.logout){
+            Toast.makeText(this, "Thank you for Using Washmycar", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MainActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+//    end of menu
 }

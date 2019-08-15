@@ -29,6 +29,14 @@
 
         <activity android:name=".VihicleProfile">
 
+
+        </activity>
+        <activity android:name=".AddVihicle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
     </application>

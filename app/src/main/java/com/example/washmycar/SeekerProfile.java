@@ -17,6 +17,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.widget.Button;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class SeekerProfile extends AppCompatActivity implements AdapterView.OnItemClickListener{
-
+    private Button button;
     private MenuItem item;
     String username = "ler", password = "ler", id = "1";
 
@@ -78,10 +79,21 @@ public class SeekerProfile extends AppCompatActivity implements AdapterView.OnIt
 
 
 
-
-
-
+        button = (Button) findViewById(R.id.addvihicle);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddVihicle();
+            }
+        });
     }
+
+
+    public void openAddVihicle() {
+        Intent intent = new Intent(this, AddVihicle.class);
+        startActivity(intent);
+    }
+
 
 
     void fetchProfileVehicleData(){

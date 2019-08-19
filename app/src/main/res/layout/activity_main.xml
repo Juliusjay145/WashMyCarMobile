@@ -68,5 +68,21 @@
         android:textColorHint="#fefefe"
         android:textStyle="bold" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp">
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="Sign Up!"
+            android:textColor="#fefefe"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>

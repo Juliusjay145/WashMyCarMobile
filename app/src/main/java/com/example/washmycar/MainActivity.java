@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText user,pass;
     Button btnLogin;
+    TextView txtregister;
 
     SharedPreferences pref;
 
@@ -48,8 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user = findViewById(R.id.editText3);
         pass = findViewById(R.id.editText4);
         btnLogin = findViewById(R.id.button);
+        txtregister =  findViewById(R.id.register);
         btnLogin.setOnClickListener(this);
-
+        txtregister.setOnClickListener(this);
 
 
     }
@@ -57,62 +60,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        String username = user.getText().toString();
-        String password = pass.getText().toString();
-        //192.168.43.19
-        try{
+        if(view == btnLogin)
+        {
+            String username = user.getText().toString();
+            String password = pass.getText().toString();
+            //192.168.43.19
+            try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwashseeker");
-            URL url = new URL("http://192.168.254.106/WashMyCar/Project/Model/mobile_seeker_profile.php");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            InputStream is=conn.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String s=br.readLine();
+                URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwashseeker");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                InputStream is=conn.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String s=br.readLine();
 
-            is.close();
-            conn.disconnect();
+                is.close();
+                conn.disconnect();
 
-            Log.d("json data", s);
-            JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("myprofile");
-            for(int i=0; i<array.length(); i++){
-                JSONObject item = array.getJSONObject(i);
-                final String user_name = item.getString("seeker_email");
-                final String user_pass = item.getString("seeker_password");
-                final String client_id = item.getString("seeker_id");
-                final String customer_name = item.getString("seeker_name");
-                //final String customer_lname = item.getString("cust_lastname");
-                //String client_name = item.getString("cust_name");
-                if(username.equals(user_name) && password.equals(user_pass))
-                {
-                    Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor=pref.edit();
-                    editor.putString("user", username);
-                    editor.putString("pass", password);
-                    editor.putString("id", client_id);
-                    editor.putString("cust_name", customer_name);
-                    //editor.putString("cust_lastname", customer_lname);
-                    //editor.putString("pestcontrol_id", client_id);
-                    //editor.putString("cust_name", client_name);
-                    editor.commit();
-                    Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, DashBoard.class);
-                    startActivity(intent);
-                    user.setText("");
-                    pass.setText("");
-                }else{
-                    Toast.makeText(this,"False",Toast.LENGTH_SHORT).show();
-                    user.setText("");
-                    pass.setText("");
+                Log.d("json data", s);
+                JSONObject json=new JSONObject(s);
+                JSONArray array = json.getJSONArray("cwseekeracc");
+                for(int i=0; i<array.length(); i++){
+                    JSONObject item = array.getJSONObject(i);
+                    final String user_name = item.getString("seeker_email");
+                    final String user_pass = item.getString("seeker_password");
+                    final String client_id = item.getString("seeker_id");
+                    final String customer_name = item.getString("seeker_name");
+                    //final String customer_lname = item.getString("cust_lastname");
+                    //String client_name = item.getString("cust_name");
+                    if(username.equals(user_name) && password.equals(user_pass))
+                    {
+                        Toast.makeText(this,"True",Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("user", username);
+                        editor.putString("pass", password);
+                        editor.putString("id", client_id);
+                        editor.putString("cust_name", customer_name);
+                        //editor.putString("cust_lastname", customer_lname);
+                        //editor.putString("pestcontrol_id", client_id);
+                        //editor.putString("cust_name", client_name);
+                        editor.commit();
+                        Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, DashBoard.class);
+                        startActivity(intent);
+                        user.setText("");
+                        pass.setText("");
+                    }else{
+                        Toast.makeText(this,"False",Toast.LENGTH_SHORT).show();
+                        user.setText("");
+                        pass.setText("");
+                    }
+
                 }
-
+            }catch (MalformedURLException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            }catch (JSONException e){
+                e.printStackTrace();
             }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }catch (JSONException e){
-            e.printStackTrace();
         }
 
+        if(view == txtregister){
+            Intent intent = new Intent(this, Register.class);
+            startActivity(intent);
+        }
+
+
+
+
+
     }
+
+
 }

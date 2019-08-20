@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -24,8 +25,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     ImageView profile;
     InputStream is;
     Button register;
+    TextView filename;
     EditText name,email,password,contact,address;
     SharedPreferences prf;
 
@@ -52,6 +56,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         address = findViewById(R.id.editText5);
         profile = findViewById(R.id.imageView1);
         register = findViewById(R.id.book1);
+        filename = findViewById(R.id.textView4);
         register.setOnClickListener(this);
         profile.setOnClickListener(this);
 
@@ -61,8 +66,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri uriImage = data.getData();
-        profile.setImageURI(uriImage);
+       if(resultCode==RESULT_OK)
+       {
+           String filename1 = data.getData().getPath();
+           Uri uriImage = data.getData();
+           profile.setImageURI(uriImage);
+           filename.setText(filename1);
+       }
+
+//        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//        URL url = classLoader.getResource("path/to/folder");
+//        File file = new File(url.toURI());
 
     }
 
@@ -73,15 +87,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         switch (id){
             case R.id.imageView1:
 
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
                 startActivityForResult(intent, 100);
                 break;
 
             case R.id.book1:
                 prf = getSharedPreferences("user_details",MODE_PRIVATE);
 
-                String picture = prf.getString("Uri", null);
-                Toast.makeText(getApplicationContext(), picture, Toast.LENGTH_SHORT).show();
+                String picture = filename.getText().toString();
+                //Toast.makeText(getApplicationContext(), picture, Toast.LENGTH_SHORT).show();
 
                 String r_name = name.getText().toString();
                 String r_email = email.getText().toString();
@@ -105,7 +120,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     HttpEntity entity = response.getEntity();
                     is=entity.getContent();
                     Toast.makeText(getApplicationContext(), "Register", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, DashBoard.class);
+                    Intent intent1 = new Intent(this, MainActivity.class);
                     startActivity(intent1);
                     //			txtname.setText("");
                     //			address.setText(caddress);

@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     final String user_pass = item.getString("seeker_password");
                     final String client_id = item.getString("seeker_id");
                     final String customer_name = item.getString("seeker_name");
+                    final String picture = item.getString("seeker_image");
                     //final String customer_lname = item.getString("cust_lastname");
                     //String client_name = item.getString("cust_name");
                     if(username.equals(user_name) && password.equals(user_pass))
@@ -93,8 +94,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SharedPreferences.Editor editor=pref.edit();
                         editor.putString("user", username);
                         editor.putString("pass", password);
-                        editor.putString("id", client_id);
+                        //editor.putString("id", client_id);
                         editor.putString("cust_name", customer_name);
+                        editor.putString("seeker_id", client_id);
+                        editor.putString("seeker_image", picture);
                         //editor.putString("cust_lastname", customer_lname);
                         //editor.putString("pestcontrol_id", client_id);
                         //editor.putString("cust_name", client_name);

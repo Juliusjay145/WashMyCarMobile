@@ -11,6 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/imageView1"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
@@ -138,32 +139,5 @@
                 android:textColor="#fefefe" />
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="228dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/imgbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="-120dp"
-                android:src="@drawable/logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="120dp"
-                android:text="Vihicle"
-                android:textStyle="bold" />
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

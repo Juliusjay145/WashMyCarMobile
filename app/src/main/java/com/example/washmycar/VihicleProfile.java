@@ -35,7 +35,7 @@ public class VihicleProfile extends AppCompatActivity {
         else
         if (id==R.id.settings){
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,SeekerProfile.class));
+            startActivity(new Intent(this,Profile.class));
         }
         else
         if (id==R.id.logout){

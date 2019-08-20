@@ -2,6 +2,9 @@ package com.example.washmycar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -9,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,35 +33,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DashBoard extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Profile extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
-    ListView lv;
+    TextView name,email,address,phone;
+    ImageView img;
+    Button btnUpdate;
+    Uri uriImage;
     SharedPreferences prf;
-    ArrayList<CompanyList> list = new ArrayList<>();
-    CompanyAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.seeker_profile);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        this.lv = findViewById(R.id.ListView);
-        this.adapter = new CompanyAdapter(this, list);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
 
-
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(policy);
-
+        name = findViewById(R.id.txt_profile_name);
+        email = findViewById(R.id.txt_profile_email);
+        address = findViewById(R.id.txt_profile_addr);
+        phone = findViewById(R.id.txt_pofile_contact);
+        img = findViewById(R.id.imageView1);
+        String customer_id = prf.getString("seeker_id", "");
 
         try{
-//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -69,11 +72,20 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             JSONArray array = json.getJSONArray("cwseekeracc");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("station_name");
-                String carwashId = item.getString("station_id");
-                String CompanyImage = item.getString("path_image");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
-                adapter.notifyDataSetChanged();
+                String cn = item.getString("seeker_id");
+                String cname = item.getString("seeker_name");
+                String clname = item.getString("seeker_email");
+                String cnumber = item.getString("seeker_address");
+                String caddress = item.getString("seeker_telephone");
+                String picture = item.getString("seeker_image");
+                //String cc = item.getString("client_contact");
+                //String ct = item.getString("client_contact");
+//	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
+                name.setText(cname);
+                email.setText(clname);
+                address.setText(cnumber);
+                phone.setText(caddress);
+                img.setImageBitmap(BitmapFactory.decodeFile(picture));
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -85,16 +97,8 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CompanyList selectedItem = list.get(i);
-        String ID = selectedItem.getId();
-//        Intent intent = new Intent(this, CateringProfile.class);
-//        intent.putExtra("catering_id", ID);
-//        startActivityForResult(intent, 1);
 
-    }
 
 
     //menus
@@ -109,7 +113,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,DashBoard.class));
+            startActivity(new Intent(this, Profile.class));
         }
         else
         if (id==R.id.settings){
@@ -124,5 +128,11 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
         return super.onOptionsItemSelected(item);
     }
-//    end of menu
+    //    end of menu
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+    }
+
 }

@@ -1,10 +1,8 @@
 package com.example.washmycar;
 
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -12,10 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,35 +30,33 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Profile extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class CarWashStationService extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
-    TextView name,email,address,phone;
-    ImageView img;
-    Button btnUpdate;
-    Uri uriImage;
+    GridView gv;
     SharedPreferences prf;
+    ArrayList<ServiceList> list = new ArrayList<>();
+    ServiceAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.seeker_profile);
+        setContentView(R.layout.station_service);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
+        this.gv = findViewById(R.id.GridView1);
+        this.adapter = new ServiceAdapter(this, list);
+        gv.setAdapter(adapter);
+        gv.setOnItemClickListener(this);
 
-        name = findViewById(R.id.txt_profile_name);
-        email = findViewById(R.id.txt_profile_email);
-        address = findViewById(R.id.txt_profile_addr);
-        phone = findViewById(R.id.txt_pofile_contact);
-        img = findViewById(R.id.imageView1);
-        String customer_id = prf.getString("seeker_id", "");
+        String ID = getIntent().getStringExtra("stations_id");
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_service/"+ ID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -72,23 +67,17 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("cwowner_services");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String cn = item.getString("seeker_id");
-                String cname = item.getString("seeker_name");
-                String clname = item.getString("seeker_email");
-                String cnumber = item.getString("seeker_address");
-                String caddress = item.getString("seeker_telephone");
-                String picture = item.getString("seeker_image");
-                //String cc = item.getString("client_contact");
-                //String ct = item.getString("client_contact");
-//	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
-                name.setText(cname);
-                email.setText(clname);
-                address.setText(cnumber);
-                phone.setText(caddress);
-                img.setImageBitmap(BitmapFactory.decodeFile(picture));
+                String serv_name = item.getString("service_name");
+                String serv_price = item.getString("service_price");
+                String serv_id = item.getString("service_id");
+                String ServiceImage = item.getString("service_picture");
+                String pest = item.getString("station_id");
+                list.add(new ServiceList(ServiceImage,serv_id,serv_name,serv_price,pest));
+                adapter.notifyDataSetChanged();
+
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -98,10 +87,24 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
             e.printStackTrace();
         }
 
+
+
+
+
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        ServiceList selectedItem = list.get(i);
+        String ID = selectedItem.getId();
+        Intent intent = new Intent(this, ProfileData.class);
+        intent.putExtra("station_id", ID);
+        startActivityForResult(intent, 1);
 
 
+
+    }
 
 
     //menus
@@ -116,7 +119,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Profile.class));
+            startActivity(new Intent(this, CarWashStationService.class));
         }
         else
         if (id==R.id.settings){
@@ -131,11 +134,5 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
 
         return super.onOptionsItemSelected(item);
     }
-    //    end of menu
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-    }
-
+//    end of menu
 }

@@ -41,6 +41,9 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.sample);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.lv = findViewById(R.id.ListView);
         this.adapter = new CompanyAdapter(this, list);
@@ -90,9 +93,11 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
         CompanyList selectedItem = list.get(i);
         String ID = selectedItem.getId();
-//        Intent intent = new Intent(this, CateringProfile.class);
-//        intent.putExtra("catering_id", ID);
-//        startActivityForResult(intent, 1);
+        Intent intent = new Intent(this, ProfileData.class);
+        intent.putExtra("station_id", ID);
+        startActivityForResult(intent, 1);
+
+
 
     }
 

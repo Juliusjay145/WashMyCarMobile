@@ -10,5 +10,8 @@ public class CarWashStation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carwashstation);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.sample);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 }

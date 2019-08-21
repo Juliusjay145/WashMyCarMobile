@@ -22,6 +22,9 @@ public class VihicleProfile extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.commonmenus,menu);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.sample);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

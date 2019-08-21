@@ -2,9 +2,6 @@ package com.example.washmycar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -13,9 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,35 +28,44 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Profile extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ProfileData extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
-    TextView name,email,address,phone;
-    ImageView img;
-    Button btnUpdate;
-    Uri uriImage;
+    ListView lv;
     SharedPreferences prf;
+    ArrayList<CarWashOwnerList> list = new ArrayList<>();
+    CarWashOwnerAdapter adapter;
+    Button btnNext;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.seeker_profile);
+        setContentView(R.layout.profile);
+        prf = getSharedPreferences("user_details", MODE_PRIVATE);
+        this.lv = findViewById(R.id.ListView);
+        btnNext = findViewById(R.id.book1);
+        btnNext.setOnClickListener(this);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        prf = getSharedPreferences("user_details", MODE_PRIVATE);
+        this.adapter = new CarWashOwnerAdapter(this, list);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
 
-        name = findViewById(R.id.txt_profile_name);
-        email = findViewById(R.id.txt_profile_email);
-        address = findViewById(R.id.txt_profile_addr);
-        phone = findViewById(R.id.txt_pofile_contact);
-        img = findViewById(R.id.imageView1);
         String customer_id = prf.getString("seeker_id", "");
+        String stations_id = getIntent().getStringExtra("station_id");
+
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashowner/"+stations_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -72,23 +76,17 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("cwowner_station");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String cn = item.getString("seeker_id");
-                String cname = item.getString("seeker_name");
-                String clname = item.getString("seeker_email");
-                String cnumber = item.getString("seeker_address");
-                String caddress = item.getString("seeker_telephone");
-                String picture = item.getString("seeker_image");
-                //String cc = item.getString("client_contact");
-                //String ct = item.getString("client_contact");
-//	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
-                name.setText(cname);
-                email.setText(clname);
-                address.setText(cnumber);
-                phone.setText(caddress);
-                img.setImageBitmap(BitmapFactory.decodeFile(picture));
+                String CompanyImage = item.getString("path_image");
+                String carwashId = item.getString("station_id");
+                String carwash_name = item.getString("station_name");
+                String carwash_address = item.getString("station_address");
+                String carwash_telephone = item.getString("station_tele");
+                String carwash_desc = item.getString("station_description");
+                list.add(new CarWashOwnerList(CompanyImage,carwashId,carwash_name,carwash_address,carwash_telephone,carwash_desc));
+                adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -100,8 +98,16 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+        CarWashOwnerList selectedItem = list.get(i);
+        String ID = selectedItem.getId();
+//        Intent intent = new Intent(this, CateringProfile.class);
+//        intent.putExtra("catering_id", ID);
+//        startActivityForResult(intent, 1);
 
+    }
 
 
     //menus
@@ -116,7 +122,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Profile.class));
+            startActivity(new Intent(this, ProfileData.class));
         }
         else
         if (id==R.id.settings){
@@ -131,11 +137,15 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
 
         return super.onOptionsItemSelected(item);
     }
-    //    end of menu
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    @Override
+    public void onClick(View view) {
+
+        String stations_id = getIntent().getStringExtra("station_id");
+        Intent intent = new Intent(this, CarWashStationService.class);
+        intent.putExtra("stations_id", stations_id);
+        startActivityForResult(intent, 1);
 
     }
-
+//    end of menu
 }

@@ -15,6 +15,9 @@ public class AddVihicle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_vihicle);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.sample);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
 

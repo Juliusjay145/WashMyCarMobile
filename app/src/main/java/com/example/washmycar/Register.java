@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +30,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -48,6 +53,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.sample);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         name = findViewById(R.id.editText1);
         email = findViewById(R.id.editText2);
@@ -73,6 +81,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
            profile.setImageURI(uriImage);
            filename.setText(filename1);
        }
+
+
+
+
 
 //        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 //        URL url = classLoader.getResource("path/to/folder");
@@ -114,7 +126,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                 try{
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.118/washmycar/index.php/androidcontroller/register");
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/register");
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
                     HttpEntity entity = response.getEntity();

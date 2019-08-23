@@ -62,7 +62,7 @@ public class CarProfileAdapter extends BaseAdapter {
         }else
 
             handler=(CarProfileAdapter.CompanyHandler) arg1.getTag();
-        Bitmap bm  = getBitmapFromURL(list.get(arg0).getImage());
+        Bitmap bm  = BitmapFactory.decodeFile(list.get(arg0).getImage());
         handler.name.setText(list.get(arg0).getName());
         handler.image.setImageBitmap(bm);
 

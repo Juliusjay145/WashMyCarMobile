@@ -46,5 +46,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.craftman.cardform:cardform:0.0.2'
     implementation 'net.gotev:uploadservice:2.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
 }

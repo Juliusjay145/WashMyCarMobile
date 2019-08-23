@@ -1,9 +1,14 @@
 package com.example.washmycar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,13 +44,19 @@ import java.util.List;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
+
     ImageView profile;
     InputStream is;
     Button register;
     TextView filename;
     EditText name,email,password,contact,address;
     SharedPreferences prf;
-
+    private static final int STORAGE_PERMISSION_CODE = 4655;
+    private Uri filepath;
+    private Bitmap bitmap;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    public static final String UPLOAD_URL = "http://192.168.43.19/washmycar/index.php/androidcontroller/register";
 
 
 
@@ -67,29 +78,80 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         filename = findViewById(R.id.textView4);
         register.setOnClickListener(this);
         profile.setOnClickListener(this);
+        requestStoragePermission();
 
     }
+
+    private void requestStoragePermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+
+            } else {
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-       if(resultCode==RESULT_OK)
-       {
-           String filename1 = data.getData().getPath();
-           Uri uriImage = data.getData();
-           profile.setImageURI(uriImage);
-           filename.setText(filename1);
-       }
+//       if(resultCode==RESULT_OK)
+//       {
+//           String filename1 = data.getData().getPath();
+//           Uri uriImage = data.getData();
+//           profile.setImageURI(uriImage);
+//           filename.setText(filename1);
+//       }
 
+        if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
 
+            filepath = data.getData();
+            try {
 
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
+                profile.setImageBitmap(bitmap);
+            } catch (Exception ex) {
 
+            }
+        }
 
 //        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 //        URL url = classLoader.getResource("path/to/folder");
 //        File file = new File(url.toURI());
 
+    }
+
+    private String getPath(Uri uri) {
+
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor = getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Images.Media._ID + "=?", new String[]{document_id}, null
+        );
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+        return path;
     }
 
     @Override
@@ -99,15 +161,19 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         switch (id){
             case R.id.imageView1:
 
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                startActivityForResult(intent, 100);
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("*/*");
+//                startActivityForResult(intent, 100);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
                 break;
 
             case R.id.book1:
                 prf = getSharedPreferences("user_details",MODE_PRIVATE);
 
-                String picture = filename.getText().toString();
+                String picture = getPath(filepath);
                 //Toast.makeText(getApplicationContext(), picture, Toast.LENGTH_SHORT).show();
 
                 String r_name = name.getText().toString();

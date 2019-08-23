@@ -117,6 +117,11 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.vehicle){
+            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,Vehicle.class));
+        }
+        else
         if (id==R.id.settings){
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,Profile.class));

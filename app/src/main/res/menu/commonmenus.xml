@@ -8,6 +8,11 @@
         android:title="Home"
         app:showAsAction="never" />
     <item
+        android:id="@+id/vehicle"
+        android:checkable="false"
+        android:title="My Vehicle"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/settings"
         android:checkable="false"
         android:title="Profile"

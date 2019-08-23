@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:gravity="center"
-            android:text="TextView"
+            android:text="Choose File to upload!"
             android:textSize="24sp"
             tools:visibility="invisible" />
 
@@ -116,8 +116,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bluebtns"
-            android:drawableStart="@drawable/phone"
-            android:drawableLeft="@drawable/phone"
+            android:drawableStart="@drawable/home"
+            android:drawableLeft="@drawable/home"
             android:ems="10"
             android:hint=" Address"
             android:inputType="text"

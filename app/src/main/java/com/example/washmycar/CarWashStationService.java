@@ -56,7 +56,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         String ID = getIntent().getStringExtra("stations_id");
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_service/"+ ID);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_service/"+ ID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

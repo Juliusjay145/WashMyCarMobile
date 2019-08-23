@@ -11,23 +11,34 @@
         android:layout_height="wrap_content">
 
 
-
-
-        <ImageView
-            android:id="@+id/imageView1"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageView12"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="-120dp"
-            android:src="@drawable/name" />
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/accounts"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView12"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="0dp"-->
+            <!--android:layout_marginBottom="-120dp"-->
+            <!--android:src="@drawable/name" />-->
 
         <LinearLayout
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginTop="145dp">
+            android:layout_marginTop="45dp">
 
             <LinearLayout
 
@@ -42,7 +53,7 @@
                     android:src="@drawable/name" />
 
                 <TextView
-                    android:id="@+id/txt_profile_name"
+                    android:id="@+id/txt_seeker_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -63,7 +74,7 @@
                     android:src="@drawable/email"/>
 
                 <TextView
-                    android:id="@+id/txt_profile_email"
+                    android:id="@+id/txt_seeker_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -85,7 +96,7 @@
                     android:src="@drawable/home"/>
 
                 <TextView
-                    android:id="@+id/txt_profile_addr"
+                    android:id="@+id/txt_seeker_addr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -107,7 +118,7 @@
                     android:src="@drawable/phone"/>
 
                 <TextView
-                    android:id="@+id/txt_pofile_contact"
+                    android:id="@+id/txt_seeker_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

@@ -103,7 +103,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String lat_i = item.getString("latitude");
                 String long_i = item.getString("longitude");
 
-//                Toast.makeText(this, lat_i + "/" + long_i, Toast.LENGTH_SHORT).show();
+
 
                     mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(lat_i), Double.parseDouble(long_i)))

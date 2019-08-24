@@ -11,12 +11,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +38,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Profile extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class ProfileUpdate extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
-    TextView name,email,address,phone;
+    EditText name,email,address,phone;
     ImageView img;
-    Button btnUpdate,btnAdd;
+    Button btnUpdate;
     Uri uriImage;
     SharedPreferences prf;
     private MenuItem item;
@@ -43,21 +55,21 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.carwash_seeker_profile);
+        setContentView(R.layout.seeker_profile_update);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
 
-        name = findViewById(R.id.txt_seeker_name);
-        email = findViewById(R.id.txt_seeker_email);
-        address = findViewById(R.id.txt_seeker_addr);
-        phone = findViewById(R.id.txt_seeker_contact);
-        img = findViewById(R.id.imageView12);
+        name = findViewById(R.id.editText1);
+        email = findViewById(R.id.editText2);
+        address = findViewById(R.id.editText3);
+        phone = findViewById(R.id.editText4);
+        img = findViewById(R.id.imageView1);
         btnUpdate = findViewById(R.id.button);
-        btnAdd = findViewById(R.id.button2);
         btnUpdate.setOnClickListener(this);
-        btnAdd.setOnClickListener(this);
+
+
         String customer_id = prf.getString("seeker_id", "");
 
         try{
@@ -81,9 +93,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
                 String cnumber = item.getString("seeker_address");
                 String caddress = item.getString("seeker_telephone");
                 String picture = item.getString("seeker_image");
-                //String cc = item.getString("client_contact");
-                //String ct = item.getString("client_contact");
-//	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
+
                 name.setText(cname);
                 email.setText(clname);
                 address.setText(cnumber);
@@ -116,12 +126,12 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Profile.class));
+            startActivity(new Intent(this, ProfileUpdate.class));
         }
         else
         if (id==R.id.settings){
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,Profile.class));
+            startActivity(new Intent(this, ProfileUpdate.class));
         }
         else
         if (id==R.id.logout){
@@ -141,16 +151,44 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
     @Override
     public void onClick(View view) {
 
-        if(view == btnUpdate)
-        {
-            Intent intent1 = new Intent(this, AddVihicle.class);
-            startActivity(intent1);
-        }
+        prf = getSharedPreferences("user_details", MODE_PRIVATE);
+        String customer_id = prf.getString("seeker_id", "");
 
-        if(view == btnAdd)
+        String s_name = name.getText().toString();
+        String s_email = email.getText().toString();
+        String s_address = address.getText().toString();
+        String s_phone = phone.getText().toString();
+
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("seeker_name", s_name));
+        nameValuePairs.add(new BasicNameValuePair("seeker_email", s_email));
+        nameValuePairs.add(new BasicNameValuePair("seeker_address", s_address));
+        nameValuePairs.add(new BasicNameValuePair("seeker_telephone", s_phone));
+
+        try{
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_update/"+customer_id);
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            InputStream is;
+            is=entity.getContent();
+            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DashBoard.class);
+            startActivity(intent);
+
+
+
+        }
+        catch(ClientProtocolException e)
         {
-            Intent intent1 = new Intent(this, ProfileUpdate.class);
-            startActivity(intent1);
+            Log.e("ClientProtocol","Log_tag");
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+            Log.e("Log_tag", "IOException");
+            e.printStackTrace();
         }
 
 

@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.collect.Maps;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //editor.putString("cust_name", client_name);
                         editor.commit();
                         Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, DashBoard.class);
+                        Intent intent = new Intent(this, MapsActivity.class);
                         startActivity(intent);
                         user.setText("");
                         pass.setText("");

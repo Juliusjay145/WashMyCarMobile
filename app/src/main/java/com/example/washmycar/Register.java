@@ -56,7 +56,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private Bitmap bitmap;
     private static final int PICK_IMAGE_REQUEST = 1;
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-    public static final String UPLOAD_URL = "http://192.168.43.19/washmycar/index.php/androidcontroller/register";
+    public static final String UPLOAD_URL = "http://192.168.43.118/washmycar/index.php/androidcontroller/register";
 
 
 

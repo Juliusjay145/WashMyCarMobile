@@ -1,3 +1,19 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <string name="app_name"> </string>
+    <string-array name="Spinner_items">
+        <item android:drawableLeft="@drawable/lock">Select Vehicle Type</item>
+        <item>SUV</item>
+        <item>Truck</item>
+        <item>Sedan</item>
+        <item>Van</item>
+        <item>Coupe</item>
+        <item>Wagon</item>
+        <item>Convertible</item>
+        <item>Sport Car</item>
+        <item>Diesel</item>
+        <item>Crossover</item>
+        <item>Luxury Car</item>
+        <item>Hyvrid/Electric</item>
+    </string-array>
+    <string name="title_activity_maps"> </string>
 </resources>

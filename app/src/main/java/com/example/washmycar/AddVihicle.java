@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,7 +41,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddVihicle extends AppCompatActivity implements View.OnClickListener {
+public class AddVihicle extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener {
 
     private MenuItem item;
     EditText plate_number,brand_name,model,color;
@@ -46,6 +49,8 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
     Button btnAddVehicle;
     InputStream is;
     SharedPreferences prf;
+
+    Spinner vehicle_type;
 
     private static final int STORAGE_PERMISSION_CODE = 4655;
     private Uri filepath;
@@ -59,6 +64,7 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_vihicle);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -72,6 +78,7 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
         brand_name = findViewById(R.id.editText2);
         model = findViewById(R.id.editText3);
         color = findViewById(R.id.editText4);
+        vehicle_type = findViewById(R.id.spinner);
         img = findViewById(R.id.imageView14);
         btnAddVehicle = findViewById(R.id.book1);
 
@@ -215,7 +222,7 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
                 String b_name = brand_name.getText().toString();
                 String model_carwash = model.getText().toString();
                 String p_color = color.getText().toString();
-
+                String v_type = vehicle_type.getSelectedItem().toString();
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
@@ -223,6 +230,7 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
                 nameValuePairs.add(new BasicNameValuePair("brand_name", b_name));
                 nameValuePairs.add(new BasicNameValuePair("color", p_color));
                 nameValuePairs.add(new BasicNameValuePair("model", model_carwash));
+                nameValuePairs.add(new BasicNameValuePair("vehicle_type", v_type));
                 nameValuePairs.add(new BasicNameValuePair("image_vehicle", picture));
 
                 try{
@@ -266,4 +274,13 @@ public class AddVihicle extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Toast.makeText(this,adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

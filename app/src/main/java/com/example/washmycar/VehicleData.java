@@ -2,6 +2,7 @@ package com.example.washmycar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,33 +31,35 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class VehicleData extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
-    ListView lv;
+    TextView platenumber,brand,model,color,type;
+    ImageView img;
     SharedPreferences prf;
-    ArrayList<CarProfileList> list = new ArrayList<>();
-    CarProfileAdapter adapter;
+    Button btnNext;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vehicle);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.sample);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        setContentView(R.layout.vihicle_profile);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        this.lv = findViewById(R.id.ListView);
-        this.adapter = new CarProfileAdapter(this, list);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
+
+        platenumber = findViewById(R.id.txt_plateno);
+        brand = findViewById(R.id.txt_brand);
+        model = findViewById(R.id.txt_model);
+        color = findViewById(R.id.txt_color);
+        type = findViewById(R.id.txt_type);
+        img = findViewById(R.id.image30);
+        btnNext = findViewById(R.id.update);
+        btnNext.setOnClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");
+        String stations_id = getIntent().getStringExtra("v_id");
 
         try{
-//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
             URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
@@ -68,11 +74,22 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
             JSONArray array = json.getJSONArray("cwseeker_vehicle");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("brand_name");
-                String carwashId = item.getString("vehicle_id");
-                String CompanyImage = item.getString("image_vehicle");
-                list.add(new CarProfileList(CompanyImage,carwashId,carwash_name));
-                adapter.notifyDataSetChanged();
+                String cn = item.getString("seeker_id");
+                String p_number = item.getString("plate_number");
+                String v_name = item.getString("brand_name");
+                String v_model = item.getString("model");
+                String v_color = item.getString("color");
+                String v_type= item.getString("vehicle_type");
+                String picture = item.getString("image_vehicle");
+                //String cc = item.getString("client_contact");
+                //String ct = item.getString("client_contact");
+//	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
+                platenumber.setText(p_number);
+                brand.setText(v_name);
+                color.setText(v_color);
+                model.setText(v_model);
+                type.setText(v_type);
+                img.setImageBitmap(BitmapFactory.decodeFile(picture));
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -87,18 +104,18 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
 
 
 
+
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CarProfileList selectedItem = list.get(i);
-        String ID = selectedItem.getId();
-        Intent intent = new Intent(this, VehicleData.class);
-        intent.putExtra("v_id", ID);
-        startActivityForResult(intent, 1);
-
-
+        //CarWashOwnerList selectedItem = list.get(i);
+        //String ID = selectedItem.getId();
+//        Intent intent = new Intent(this, CateringProfile.class);
+//        intent.putExtra("catering_id", ID);
+//        startActivityForResult(intent, 1);
 
     }
 
@@ -115,12 +132,7 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Vehicle.class));
-        }
-        else
-        if (id==R.id.vehicle){
-            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,Profile.class));
+            startActivity(new Intent(this, VehicleData.class));
         }
         else
         if (id==R.id.settings){
@@ -134,6 +146,16 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        String vehicle_id = getIntent().getStringExtra("v_id");
+        Intent intent = new Intent(this, VehicleUpdate.class);
+        intent.putExtra("car_id", vehicle_id);
+        startActivityForResult(intent, 1);
+
     }
 //    end of menu
 }

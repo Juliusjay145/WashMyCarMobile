@@ -1,0 +1,160 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fefefe"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image30"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="-120dp"
+            android:src="@drawable/name" />
+
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="145dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/editText31"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bluebtns"
+                    android:drawableStart="@drawable/plate"
+                    android:drawableLeft="@drawable/plate"
+                    android:ems="10"
+                    android:hint=" Plate"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#2E79C5"
+                    android:textColorHint="#2E79C5"
+                    android:textColorLink="#2E79C5" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editText32"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bluebtns"
+                    android:drawableStart="@drawable/brand"
+                    android:drawableLeft="@drawable/brand"
+                    android:ems="10"
+                    android:hint=" Brand"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#2E79C5"
+                    android:textColorHint="#2E79C5"
+                    android:textColorLink="#2E79C5" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editText33"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bluebtns"
+                    android:drawableStart="@drawable/model"
+                    android:drawableLeft="@drawable/model"
+                    android:ems="10"
+                    android:hint=" Model"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#2E79C5"
+                    android:textColorHint="#2E79C5"
+                    android:textColorLink="#2E79C5" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editText34"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bluebtns"
+                    android:drawableStart="@drawable/color"
+                    android:drawableLeft="@drawable/color"
+                    android:ems="10"
+                    android:hint=" Color"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#2E79C5"
+                    android:textColorHint="#2E79C5"
+                    android:textColorLink="#2E79C5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editText35"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bluebtns"
+                    android:drawableStart="@drawable/type"
+                    android:drawableLeft="@drawable/type"
+                    android:ems="10"
+                    android:hint=" Type"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#2E79C5"
+                    android:textColorHint="#2E79C5"
+                    android:textColorLink="#2E79C5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/update40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_buttons2"
+                    android:text="Update"
+                    android:textColor="#fefefe" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

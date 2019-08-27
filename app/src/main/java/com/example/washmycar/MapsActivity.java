@@ -7,6 +7,7 @@ import android.app.AppComponentFactory;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -75,10 +76,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(10.3168447, 123.8885356);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//         Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(10.2975, 123.8968);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Cebu"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         try{
 
@@ -131,10 +132,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.commonmenus,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
         int id = item.getItemId();
+        if (id==R.id.maps){
+            Toast.makeText(this, "Maps", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MapsActivity.class));
+        }
+        else
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));

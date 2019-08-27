@@ -122,7 +122,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, ProfileData.class));
+            startActivity(new Intent(this, DashBoard.class));
         }
         else
         if (id==R.id.settings){

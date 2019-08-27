@@ -128,12 +128,17 @@ public class VehicleUpdate extends AppCompatActivity implements AdapterView.OnIt
         int id = item.getItemId();
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, VehicleUpdate.class));
+            startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.vehicle){
+            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, VehicleUpdate.class));
+            startActivity(new Intent(this,Profile.class));
         }
         else
         if (id==R.id.logout){

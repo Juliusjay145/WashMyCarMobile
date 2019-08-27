@@ -117,9 +117,19 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
         int id = item.getItemId();
+        if (id==R.id.maps){
+            Toast.makeText(this, "Maps", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MapsActivity.class));
+        }
+        else
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, CarWashStationService.class));
+            startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.vehicle){
+            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){

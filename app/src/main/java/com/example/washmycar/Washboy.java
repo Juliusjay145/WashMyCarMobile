@@ -3,13 +3,12 @@ package com.example.washmycar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,38 +26,36 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DashBoard extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Washboy extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
-    ListView lv;
+    GridView gv;
     SharedPreferences prf;
-    ArrayList<CompanyList> list = new ArrayList<>();
-    CompanyAdapter adapter;
+    ArrayList<WashboyList> list = new ArrayList<>();
+    WashboyAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.station_washboy);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        this.lv = findViewById(R.id.ListView);
-        this.adapter = new CompanyAdapter(this, list);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(this);
+        this.gv = findViewById(R.id.GridView12);
+        this.adapter = new WashboyAdapter(this, list);
+        gv.setAdapter(adapter);
+        gv.setOnItemClickListener(this);
 
+        String ID = getIntent().getStringExtra("stations_id");
+        String sID = getIntent().getStringExtra("s_id");
 
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(policy);
-
+        Toast.makeText(getApplicationContext(), sID, Toast.LENGTH_SHORT).show();
 
         try{
-//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_washboy/"+ sID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -69,14 +66,15 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("cwowner_washboy");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("station_name");
-                String carwashId = item.getString("station_id");
-                String CompanyImage = item.getString("path_image");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
+                String serv_name = item.getString("employee_name");
+                String serv_id = item.getString("employee_id");
+                String ServiceImage = item.getString("employee_picture");
+                list.add(new WashboyList(ServiceImage,serv_id,serv_name));
                 adapter.notifyDataSetChanged();
+
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -86,14 +84,18 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             e.printStackTrace();
         }
 
+
+
+
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CompanyList selectedItem = list.get(i);
+        WashboyList selectedItem = list.get(i);
         String ID = selectedItem.getId();
-        Intent intent = new Intent(this, ProfileData.class);
+        Intent intent = new Intent(this, MyVehicle.class);
         intent.putExtra("station_id", ID);
         startActivityForResult(intent, 1);
 

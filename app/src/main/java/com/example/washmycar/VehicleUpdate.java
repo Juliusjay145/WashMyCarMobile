@@ -73,7 +73,7 @@ public class VehicleUpdate extends AppCompatActivity implements AdapterView.OnIt
         String customer_id = prf.getString("seeker_id", "");
 
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -84,15 +84,15 @@ public class VehicleUpdate extends AppCompatActivity implements AdapterView.OnIt
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseeker_vehicle");
+            JSONArray array = json.getJSONArray("cwseekervehicle");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
                 String cn = item.getString("seeker_id");
-                String p_number = item.getString("plate_number");
-                String v_name = item.getString("brand_name");
-                String v_model = item.getString("model");
-                String v_color = item.getString("color");
-                String v_type= item.getString("vehicle_type");
+                String p_number = item.getString("cwsv_plateno");
+                String v_name = item.getString("cwsv_brand");
+                String v_model = item.getString("cwsv_model");
+                String v_color = item.getString("cwsv_color");
+                String v_type= item.getString("cwsv_type");
                 String picture = item.getString("image_vehicle");
 
                 plate_number.setText(p_number);
@@ -169,15 +169,15 @@ public class VehicleUpdate extends AppCompatActivity implements AdapterView.OnIt
         String p_type = type.getText().toString();
 
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-        nameValuePairs.add(new BasicNameValuePair("plate_number", p_number));
-        nameValuePairs.add(new BasicNameValuePair("brand_name", p_brand));
-        nameValuePairs.add(new BasicNameValuePair("model", p_model));
-        nameValuePairs.add(new BasicNameValuePair("color", p_color));
-        nameValuePairs.add(new BasicNameValuePair("vehicle_type", p_type));
+        nameValuePairs.add(new BasicNameValuePair("cwsv_plateno", p_number));
+        nameValuePairs.add(new BasicNameValuePair("cwsv_brand", p_brand));
+        nameValuePairs.add(new BasicNameValuePair("cwsv_model", p_model));
+        nameValuePairs.add(new BasicNameValuePair("cwsv_color", p_color));
+        nameValuePairs.add(new BasicNameValuePair("cwsv_type", p_type));
 
         try{
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_vehicle_update/"+vehicle_id);
+            HttpPost httpPost = new HttpPost("http://192.168.43.118/washmycar/index.php/androidcontroller/seeker_vehicle_update/"+vehicle_id);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();

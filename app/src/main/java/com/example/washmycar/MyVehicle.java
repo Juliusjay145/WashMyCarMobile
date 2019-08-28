@@ -3,7 +3,6 @@ package com.example.washmycar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,38 +26,35 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DashBoard extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     ListView lv;
     SharedPreferences prf;
-    ArrayList<CompanyList> list = new ArrayList<>();
-    CompanyAdapter adapter;
+    ArrayList<CarProfileList> list = new ArrayList<>();
+    CarProfileAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.vehicle);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.lv = findViewById(R.id.ListView);
-        this.adapter = new CompanyAdapter(this, list);
+        this.adapter = new CarProfileAdapter(this, list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-
-
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(policy);
-
+        String ID = getIntent().getStringExtra("sta_id");
+        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_SHORT).show();
+        String customer_id = prf.getString("seeker_id", "");
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -69,13 +65,13 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("cwseekervehicle");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("station_name");
-                String carwashId = item.getString("station_id");
-                String CompanyImage = item.getString("path_image");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
+                String carwash_name = item.getString("cwsv_brand");
+                String carwashId = item.getString("cwsv_id");
+                String CompanyImage = item.getString("image_vehicle");
+                list.add(new CarProfileList(CompanyImage,carwashId,carwash_name));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -86,15 +82,22 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             e.printStackTrace();
         }
 
+
+
+
+
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CompanyList selectedItem = list.get(i);
+        CarProfileList selectedItem = list.get(i);
+        String stationID = getIntent().getStringExtra("sta_id");
         String ID = selectedItem.getId();
-        Intent intent = new Intent(this, ProfileData.class);
-        intent.putExtra("station_id", ID);
+        Intent intent = new Intent(this, Washboy.class);
+        intent.putExtra("v_id", ID);
+        intent.putExtra("s_id", stationID);
         startActivityForResult(intent, 1);
 
 
@@ -124,7 +127,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
         else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,Vehicle.class));
+            startActivity(new Intent(this, Vehicle.class));
         }
         else
         if (id==R.id.settings){

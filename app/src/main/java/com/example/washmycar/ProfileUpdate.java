@@ -73,7 +73,7 @@ public class ProfileUpdate extends AppCompatActivity implements AdapterView.OnIt
         String customer_id = prf.getString("seeker_id", "");
 
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -172,7 +172,7 @@ public class ProfileUpdate extends AppCompatActivity implements AdapterView.OnIt
 
         try{
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_update/"+customer_id);
+            HttpPost httpPost = new HttpPost("http://192.168.43.118/washmycar/index.php/androidcontroller/seeker_update/"+customer_id);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();

@@ -61,7 +61,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         String customer_id = prf.getString("seeker_id", "");
 
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashseeker/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

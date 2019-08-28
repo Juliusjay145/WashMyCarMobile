@@ -60,7 +60,7 @@ public class VehicleData extends AppCompatActivity implements View.OnClickListen
         String stations_id = getIntent().getStringExtra("v_id");
 
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -71,15 +71,15 @@ public class VehicleData extends AppCompatActivity implements View.OnClickListen
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseeker_vehicle");
+            JSONArray array = json.getJSONArray("cwseekervehicle");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
                 String cn = item.getString("seeker_id");
-                String p_number = item.getString("plate_number");
-                String v_name = item.getString("brand_name");
-                String v_model = item.getString("model");
-                String v_color = item.getString("color");
-                String v_type= item.getString("vehicle_type");
+                String p_number = item.getString("cwsv_plateno");
+                String v_name = item.getString("cwsv_brand");
+                String v_model = item.getString("cwsv_model");
+                String v_color = item.getString("cwsv_color");
+                String v_type= item.getString("cwsv_type");
                 String picture = item.getString("image_vehicle");
                 //String cc = item.getString("client_contact");
                 //String ct = item.getString("client_contact");

@@ -54,7 +54,7 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -65,11 +65,11 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseeker_vehicle");
+            JSONArray array = json.getJSONArray("cwseekervehicle");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("brand_name");
-                String carwashId = item.getString("vehicle_id");
+                String carwash_name = item.getString("cwsv_brand");
+                String carwashId = item.getString("cwsv_id");
                 String CompanyImage = item.getString("image_vehicle");
                 list.add(new CarProfileList(CompanyImage,carwashId,carwash_name));
                 adapter.notifyDataSetChanged();

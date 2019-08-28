@@ -65,7 +65,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_profile_carwashowner/"+stations_id);
+            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashowner/"+stations_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

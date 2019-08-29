@@ -54,9 +54,11 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         gv.setOnItemClickListener(this);
 
         String ID = getIntent().getStringExtra("stations_id");
+        String sname = getIntent().getStringExtra("st_name");
+        //Toast.makeText(getApplicationContext(), sname, Toast.LENGTH_SHORT).show();
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_service/"+ ID);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_service/"+ ID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -98,10 +100,14 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
 
         ServiceList selectedItem = list.get(i);
         String ID = selectedItem.getId();
+        String StationName = selectedItem.getName();
         String sID = getIntent().getStringExtra("stations_id");
+        String sname = getIntent().getStringExtra("st_name");
         Intent intent = new Intent(this, MyVehicle.class);
-        intent.putExtra("station_id", ID);
+        intent.putExtra("service_id", ID);
         intent.putExtra("sta_id", sID);
+        intent.putExtra("service_name", StationName);
+        intent.putExtra("station_name", sname);
         startActivityForResult(intent, 1);
 
 

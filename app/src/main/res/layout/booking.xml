@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fefefe"
-    tools:context=".SeekerProfile" >
+    tools:context=".Register" >
 
     <LinearLayout
         android:orientation="vertical"
@@ -11,31 +11,23 @@
         android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="-120dp"
-            android:src="@drawable/name" />
-
         <EditText
             android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_above="@+id/editText4"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bluebtns"
-            android:drawableStart="@drawable/name"
-            android:drawableLeft="@drawable/name"
+            android:drawableStart="@drawable/service"
+            android:drawableLeft="@drawable/service"
             android:ems="10"
-            android:hint=" Name"
+            android:hint=" Service Name"
             android:inputType="text"
             android:paddingLeft="10dp"
+            android:padding="10dp"
             android:textColor="#000000"
             android:textColorHint="#4D585B"
             android:textColorLink="#000000" />
@@ -50,10 +42,10 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bluebtns"
-            android:drawableStart="@drawable/email"
-            android:drawableLeft="@drawable/brand"
+            android:drawableStart="@drawable/name"
+            android:drawableLeft="@drawable/name"
             android:ems="10"
-            android:hint=" Email"
+            android:hint=" Washboy Name"
             android:inputType="text"
             android:padding="10dp"
             android:textColor="#000000"
@@ -69,13 +61,14 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bluebtns"
-            android:drawableStart="@drawable/home"
-            android:drawableLeft="@drawable/home"
+            android:drawableStart="@drawable/time"
+            android:drawableLeft="@drawable/time"
             android:ems="10"
-            android:hint="Address"
+            android:hint=" Time"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="#000000"
+            android:padding="10dp"
             android:textColorHint="#4D585B"
             android:textColorLink="#000000" />
 
@@ -88,26 +81,49 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bluebtns"
-            android:drawableStart="@drawable/phone"
-            android:drawableLeft="@drawable/phone"
+            android:drawableStart="@drawable/calendar"
+            android:drawableLeft="@drawable/calendar"
             android:ems="10"
-            android:hint=" Contact"
+            android:hint=" Date"
+            android:padding="10dp"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:textColor="#000000"
+            android:textColorHint="#4D585B"
+            android:textColorLink="#000000" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@+id/editText4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bluebtns"
+            android:drawableStart="@drawable/about"
+            android:drawableLeft="@drawable/about"
+            android:ems="10"
+            android:hint=" About"
+            android:padding="10dp"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="#000000"
             android:textColorHint="#4D585B"
             android:textColorLink="#000000" />
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/book1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -117,10 +133,41 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_buttons2"
-                android:text="Save"
+                android:text="Book"
                 android:textColor="#fefefe" />
         </LinearLayout>
 
+        <!--<Button-->
+        <!--android:id="@+id/cancel"-->
+        <!--android:layout_width="190dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@+id/editText4"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginTop="-100dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:background="@drawable/rounded_buttons2"-->
+        <!--android:text="Cancel"-->
+        <!--android:textColor="#fefefe"-->
+        <!--android:textColorHint="#fefefe"-->
+        <!--android:textStyle="bold" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/book1"-->
+        <!--android:layout_width="190dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@+id/editText4"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginLeft="210dp"-->
+        <!--android:layout_marginTop="-48dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@drawable/rounded_buttons2"-->
+        <!--android:text="Book"-->
+        <!--android:textColor="#fefefe"-->
+        <!--android:textColorHint="#fefefe"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_alignParentBottom="true"/>-->
 
     </LinearLayout>
+
 </ScrollView>

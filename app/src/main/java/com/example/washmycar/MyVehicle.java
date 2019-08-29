@@ -49,12 +49,14 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
         String ID = getIntent().getStringExtra("sta_id");
-        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_SHORT).show();
+        String serviceName = getIntent().getStringExtra("service_name");
+        String stationName = getIntent().getStringExtra("station_name");
+        //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
         String customer_id = prf.getString("seeker_id", "");
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -94,10 +96,16 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
 
         CarProfileList selectedItem = list.get(i);
         String stationID = getIntent().getStringExtra("sta_id");
+        String stationName = getIntent().getStringExtra("station_name");
+        String serviceName = getIntent().getStringExtra("service_name");
+        String service_id = getIntent().getStringExtra("service_id");
         String ID = selectedItem.getId();
         Intent intent = new Intent(this, Washboy.class);
         intent.putExtra("v_id", ID);
         intent.putExtra("s_id", stationID);
+        intent.putExtra("s_name", stationName);
+        intent.putExtra("service_name", serviceName);
+        intent.putExtra("service_id", service_id);
         startActivityForResult(intent, 1);
 
 

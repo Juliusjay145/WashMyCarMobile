@@ -51,11 +51,12 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
 
         String ID = getIntent().getStringExtra("stations_id");
         String sID = getIntent().getStringExtra("s_id");
-
-        Toast.makeText(getApplicationContext(), sID, Toast.LENGTH_SHORT).show();
+        String serviceName = getIntent().getStringExtra("service_name");
+        String vehicle_id = getIntent().getStringExtra("v_id");
+        String stationName = getIntent().getStringExtra("s_name");
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_washboy/"+ sID);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_washboy/"+ sID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -95,12 +96,21 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
 
         WashboyList selectedItem = list.get(i);
         String ID = selectedItem.getId();
-        Intent intent = new Intent(this, MyVehicle.class);
-        intent.putExtra("station_id", ID);
+        String washboy_name = selectedItem.getName();
+        String sID = getIntent().getStringExtra("s_id"); //station id
+        String serviceName = getIntent().getStringExtra("service_name"); //service name
+        String stationName = getIntent().getStringExtra("s_name"); // station name
+        String vehicle_id = getIntent().getStringExtra("v_id"); //vehicle id
+        String service_id = getIntent().getStringExtra("service_id"); // service_id
+        Intent intent = new Intent(this, BookingTransaction.class);
+        intent.putExtra("washboy_id", ID);
+        intent.putExtra("station_id", sID);
+        intent.putExtra("service_name", serviceName);
+        intent.putExtra("station_name", stationName);
+        intent.putExtra("washboy_name", washboy_name);
+        intent.putExtra("car_id", vehicle_id);
+        intent.putExtra("service_id", service_id);
         startActivityForResult(intent, 1);
-
-
-
     }
 
 

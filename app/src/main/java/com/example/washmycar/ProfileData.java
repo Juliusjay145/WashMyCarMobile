@@ -56,6 +56,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
 
         String customer_id = prf.getString("seeker_id", "");
         String stations_id = getIntent().getStringExtra("station_id");
+        String stations_name = getIntent().getStringExtra("stat_name");
 
 
 
@@ -65,7 +66,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_profile_carwashowner/"+stations_id);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_profile_carwashowner/"+stations_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -142,8 +143,10 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
 
         String stations_id = getIntent().getStringExtra("station_id");
+        String stations_name = getIntent().getStringExtra("stat_name");
         Intent intent = new Intent(this, CarWashStationService.class);
         intent.putExtra("stations_id", stations_id);
+        intent.putExtra("st_name", stations_name);
         startActivityForResult(intent, 1);
 
     }

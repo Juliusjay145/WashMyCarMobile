@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //192.168.43.19
             try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwashseeker");
-                URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwashseeker");
+                URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwashseeker");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 InputStream is=conn.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //editor.putString("id", client_id);
                         editor.putString("cust_name", customer_name);
                         editor.putString("seeker_id", client_id);
+                        editor.putString("seeker_name", customer_name);
                         editor.putString("seeker_image", picture);
                         //editor.putString("cust_lastname", customer_lname);
                         //editor.putString("pestcontrol_id", client_id);

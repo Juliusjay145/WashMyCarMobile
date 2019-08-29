@@ -245,7 +245,7 @@ public class AddVihicle extends AppCompatActivity implements AdapterView.OnItemS
 
                 try{
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.118/washmycar/index.php/androidcontroller/add_vehicle");
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/add_vehicle");
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
                     HttpEntity entity = response.getEntity();

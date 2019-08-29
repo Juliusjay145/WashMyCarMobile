@@ -60,7 +60,7 @@ public class VehicleData extends AppCompatActivity implements View.OnClickListen
         String stations_id = getIntent().getStringExtra("v_id");
 
         try{
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

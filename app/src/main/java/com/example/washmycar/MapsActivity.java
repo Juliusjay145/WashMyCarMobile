@@ -85,7 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             //FETCH SA MGA NING REQUEST NGA MGA WASTE PRODUCER
 
-            java.net.URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            java.net.URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwash_station");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

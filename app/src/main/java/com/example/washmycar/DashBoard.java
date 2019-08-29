@@ -58,7 +58,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwash_station");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -93,8 +93,10 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
         CompanyList selectedItem = list.get(i);
         String ID = selectedItem.getId();
+        String name = selectedItem.getName();
         Intent intent = new Intent(this, ProfileData.class);
         intent.putExtra("station_id", ID);
+        intent.putExtra("stat_name", name);
         startActivityForResult(intent, 1);
 
 

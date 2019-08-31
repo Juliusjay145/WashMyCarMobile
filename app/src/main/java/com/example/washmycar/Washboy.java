@@ -54,6 +54,11 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String serviceName = getIntent().getStringExtra("service_name");
         String vehicle_id = getIntent().getStringExtra("v_id");
         String stationName = getIntent().getStringExtra("s_name");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
+
+        Toast.makeText(getApplicationContext(), stationName, Toast.LENGTH_SHORT).show();
 
         try{
             URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_washboy/"+ sID);
@@ -102,6 +107,9 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String stationName = getIntent().getStringExtra("s_name"); // station name
         String vehicle_id = getIntent().getStringExtra("v_id"); //vehicle id
         String service_id = getIntent().getStringExtra("service_id"); // service_id
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
         Intent intent = new Intent(this, BookingTransaction.class);
         intent.putExtra("washboy_id", ID);
         intent.putExtra("station_id", sID);
@@ -110,6 +118,9 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         intent.putExtra("washboy_name", washboy_name);
         intent.putExtra("car_id", vehicle_id);
         intent.putExtra("service_id", service_id);
+        intent.putExtra("date", date);
+        intent.putExtra("time", time);
+        intent.putExtra("schedule_id", schedule_id);
         startActivityForResult(intent, 1);
     }
 

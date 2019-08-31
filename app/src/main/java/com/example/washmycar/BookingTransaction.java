@@ -1,6 +1,7 @@
 package com.example.washmycar;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -51,14 +52,16 @@ import java.util.List;
 public class BookingTransaction extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener {
 
     private MenuItem item;
-    EditText s_name,wash_name,time,date,about;
+    EditText s_name,wash_name,time1,date2,about;
     Button btnBooking;
     InputStream is;
     SharedPreferences prf;
 
     DateFormat format=DateFormat.getDateInstance();
     Calendar calendar=Calendar.getInstance();
+    @SuppressLint("NewApi")
     int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+    @SuppressLint("NewApi")
     int currentMinute = calendar.get(Calendar.MINUTE);
     TimePickerDialog timePickerDialog;
     String amPm;
@@ -83,8 +86,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         s_name = findViewById(R.id.editText1);
         wash_name = findViewById(R.id.editText2);
-        time = findViewById(R.id.editText3);
-        date = findViewById(R.id.editText4);
+        time1 = findViewById(R.id.editText3);
+        date2 = findViewById(R.id.editText4);
         about = findViewById(R.id.editText5);
 
 
@@ -93,17 +96,23 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
 
         btnBooking.setOnClickListener(this);
-        time.setOnClickListener(this);
+        //time.setOnClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");
         String station_id = getIntent().getStringExtra("station_id");
         String service_name = getIntent().getStringExtra("service_name");
         String vehicle_id = getIntent().getStringExtra("car_id");
         String washboy_name = getIntent().getStringExtra("washboy_name");
-
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
+        String st_name = getIntent().getStringExtra("station_name");
+        Toast.makeText(getApplicationContext(), st_name, Toast.LENGTH_SHORT).show();
 
         s_name.setText(service_name);
         wash_name.setText(washboy_name);
+        time1.setText(time);
+        date2.setText(date);
 
 
 
@@ -179,7 +188,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 }
                 calendar.set(Time.HOUR, hourOfDay);
                 calendar.set(Time.MINUTE, minutes);
-                time.setText(String.format("%02d:%02d", hourOfDay, minutes) + amPm);
+                time1.setText(String.format("%02d:%02d", hourOfDay, minutes) + amPm);
             }
         }, currentHour, currentMinute, false);
 
@@ -206,8 +215,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
                 String se_name = s_name.getText().toString();
                 String w_name = wash_name.getText().toString();
-                String t_time = time.getText().toString();
-                String t_date = date.getText().toString();
+                String t_time = time1.getText().toString();
+                String t_date = date2.getText().toString();
                 String t_about = about.getText().toString();
 
 
@@ -255,11 +264,41 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                     e.printStackTrace();
                 }
 
+                String schedule_id = getIntent().getStringExtra("schedule_id");
+                try{
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/schedule_update/"+schedule_id);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                    is=entity.getContent();
+                    Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(this, DashBoard.class);
+                    startActivity(intent1);
+                    //			txtname.setText("");
+                    //			address.setText(caddress);
+                    //			txtcontact.setText("");
+                    //			txtusername.setText("");
+                    //			txtpassword.setText("");
+
+
+                }
+                catch(ClientProtocolException e)
+                {
+                    Log.e("ClientProtocol","Log_tag");
+                    e.printStackTrace();
+                }
+                catch(IOException e)
+                {
+                    Log.e("Log_tag", "IOException");
+                    e.printStackTrace();
+                }
+
                 break;
 
-            case R.id.editText3:
-                timePickerDialog.show();
-                break;
+//            case R.id.editText3:
+////                timePickerDialog.show();
+////                break;
 
 
 

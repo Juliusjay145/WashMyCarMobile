@@ -1,17 +1,13 @@
 package com.example.washmycar;
 
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,38 +26,35 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class CarWashStationService extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Schedule extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
-    GridView gv;
+    ListView lv;
     SharedPreferences prf;
-    ArrayList<ServiceList> list = new ArrayList<>();
-    ServiceAdapter adapter;
+    ArrayList<ScheduleList> list = new ArrayList<>();
+    ScheduleAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.station_service);
+        setContentView(R.layout.schedule);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        this.gv = findViewById(R.id.GridView1);
-        this.adapter = new ServiceAdapter(this, list);
-        gv.setAdapter(adapter);
-        gv.setOnItemClickListener(this);
+        this.lv = findViewById(R.id.ListView);
+        this.adapter = new ScheduleAdapter(this, list);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
 
-        String ID = getIntent().getStringExtra("stations_id");
-        String sname = getIntent().getStringExtra("st_name");
-        String schedule_id = getIntent().getStringExtra("schedule_id");
-        String date = getIntent().getStringExtra("date");
-        String time = getIntent().getStringExtra("time");
-        Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_SHORT).show();
+        String customer_id = prf.getString("seeker_id", "");
+        String stations_id = getIntent().getStringExtra("stations_id");
 
         try{
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_service/"+ ID);
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_schedule/"+stations_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -72,17 +65,16 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwowner_services");
+            JSONArray array = json.getJSONArray("cwschedule");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String serv_name = item.getString("service_name");
-                String serv_price = item.getString("service_price");
-                String serv_id = item.getString("service_id");
-                String ServiceImage = item.getString("service_picture");
-                String pest = item.getString("station_id");
-                list.add(new ServiceList(ServiceImage,serv_id,serv_name,serv_price,pest));
+                String ScheduleId = item.getString("schedule_id");
+                String StationId = item.getString("station_id");
+                String carwash_date = item.getString("seeker_date");
+                String carwash_time = item.getString("seeker_time");
+                String carwash_status = item.getString("status");
+                list.add(new ScheduleList(ScheduleId,carwash_date,carwash_time,carwash_status,StationId));
                 adapter.notifyDataSetChanged();
-
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -96,27 +88,26 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
 
 
 
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        ServiceList selectedItem = list.get(i);
+        ScheduleList selectedItem = list.get(i);
         String ID = selectedItem.getId();
-        String StationName = selectedItem.getName();
-        String sID = getIntent().getStringExtra("stations_id");
-        String schedule_id = getIntent().getStringExtra("schedule_id");
-        String sname = getIntent().getStringExtra("st_name");
-        String date = getIntent().getStringExtra("date");
-        String time = getIntent().getStringExtra("time");
-        Intent intent = new Intent(this, MyVehicle.class);
-        intent.putExtra("service_id", ID);
-        intent.putExtra("sta_id", sID);
-        intent.putExtra("service_name", StationName);
-        intent.putExtra("station_name", sname);
+        String date = selectedItem.getDate();
+        String time = selectedItem.getTime();
+        String stations_id = getIntent().getStringExtra("stations_id");
+        String stations_name = getIntent().getStringExtra("st_name");
+        Toast.makeText(getApplicationContext(), stations_id, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, CarWashStationService.class);
+        intent.putExtra("v_id", ID);
+        intent.putExtra("stations_id", stations_id);
         intent.putExtra("date", date);
         intent.putExtra("time", time);
-        intent.putExtra("schedule_id", schedule_id);
+        intent.putExtra("schedule_id", ID);
+        intent.putExtra("st_name", stations_name);
         startActivityForResult(intent, 1);
 
 
@@ -146,7 +137,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,Vehicle.class));
+            startActivity(new Intent(this, Schedule.class));
         }
         else
         if (id==R.id.settings){

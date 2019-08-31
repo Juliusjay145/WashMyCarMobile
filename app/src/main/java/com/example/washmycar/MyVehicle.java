@@ -51,6 +51,9 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         String ID = getIntent().getStringExtra("sta_id");
         String serviceName = getIntent().getStringExtra("service_name");
         String stationName = getIntent().getStringExtra("station_name");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
         //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
         String customer_id = prf.getString("seeker_id", "");
 
@@ -99,6 +102,9 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         String stationName = getIntent().getStringExtra("station_name");
         String serviceName = getIntent().getStringExtra("service_name");
         String service_id = getIntent().getStringExtra("service_id");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
         String ID = selectedItem.getId();
         Intent intent = new Intent(this, Washboy.class);
         intent.putExtra("v_id", ID);
@@ -106,6 +112,9 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         intent.putExtra("s_name", stationName);
         intent.putExtra("service_name", serviceName);
         intent.putExtra("service_id", service_id);
+        intent.putExtra("date", date);
+        intent.putExtra("time", time);
+        intent.putExtra("schedule_id", schedule_id);
         startActivityForResult(intent, 1);
 
 

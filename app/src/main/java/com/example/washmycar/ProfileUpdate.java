@@ -179,7 +179,7 @@ public class ProfileUpdate extends AppCompatActivity implements AdapterView.OnIt
             InputStream is;
             is=entity.getContent();
             Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, DashBoard.class);
+            Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
 
 

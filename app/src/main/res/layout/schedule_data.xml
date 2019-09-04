@@ -22,12 +22,20 @@
         android:layout_height="120dp"
         android:elevation="16dp">
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="-5dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/calendar" />
+
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
             android:text="TextView"
             android:textSize="20sp"
@@ -38,8 +46,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginLeft="-81dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"
             android:text="TextView"
             android:textSize="20sp"
@@ -50,8 +58,9 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="55dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="-25dp"
+            android:layout_marginLeft="-81dp"
             android:layout_marginBottom="20dp"
             android:text="TextView"
             android:textSize="20sp"

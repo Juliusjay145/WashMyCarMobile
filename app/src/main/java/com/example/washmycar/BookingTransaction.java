@@ -99,6 +99,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         //time.setOnClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");
+        String picture = prf.getString("seeker_image", "");
         String station_id = getIntent().getStringExtra("station_id");
         String service_name = getIntent().getStringExtra("service_name");
         String vehicle_id = getIntent().getStringExtra("car_id");
@@ -205,6 +206,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
 
                 String customer_id = prf.getString("seeker_id", "");
+                String picture = prf.getString("seeker_image", "");
                 String customer_name = prf.getString("seeker_name", "");
                 String station_id = getIntent().getStringExtra("station_id");
                 String serv_name = getIntent().getStringExtra("service_name");
@@ -232,6 +234,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 nameValuePairs.add(new BasicNameValuePair("service_name", se_name));
                 nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
                 nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
+                nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
 
 
 
@@ -243,7 +246,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                     HttpEntity entity = response.getEntity();
                     is=entity.getContent();
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, DashBoard.class);
+                    Intent intent1 = new Intent(this, BookingDetails.class);
                     startActivity(intent1);
                     //			txtname.setText("");
                     //			address.setText(caddress);
@@ -273,7 +276,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                     HttpEntity entity = response.getEntity();
                     is=entity.getContent();
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, DashBoard.class);
+                    Intent intent1 = new Intent(this, BookingDetails.class);
                     startActivity(intent1);
                     //			txtname.setText("");
                     //			address.setText(caddress);

@@ -3,7 +3,6 @@ package com.example.washmycar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,38 +26,41 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DashBoard extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class BookingDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     ListView lv;
     SharedPreferences prf;
-    ArrayList<CompanyList> list = new ArrayList<>();
-    CompanyAdapter adapter;
+    ArrayList<BookingDetailsList> list = new ArrayList<>();
+    BookingDetailsAdapter adapter;
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.vehicle);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.lv = findViewById(R.id.ListView);
-        this.adapter = new CompanyAdapter(this, list);
+        this.adapter = new BookingDetailsAdapter(this, list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-
-
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(policy);
-
+        String ID = getIntent().getStringExtra("sta_id");
+        String serviceName = getIntent().getStringExtra("service_name");
+        String stationName = getIntent().getStringExtra("station_name");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
+        //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
+        String customer_id = prf.getString("seeker_id", "");
+        String picture = prf.getString("seeker_image", "");
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_details/"+customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -69,13 +71,20 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekeracc");
+            JSONArray array = json.getJSONArray("cwowner_booking");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("station_name");
-                String carwashId = item.getString("station_id");
-                String CompanyImage = item.getString("path_image");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
+                String customer_name = item.getString("seeker_name");
+                String Customer_image = item.getString("seeker_image");
+                String transaction_id = item.getString("request_id");
+                String customer_date = item.getString("seeker_date");
+                String customer_time = item.getString("seeker_time");
+                String customer_service = item.getString("service_name");
+                String employee = item.getString("washboy_name");
+                String station = item.getString("station_name");
+                String status = item.getString("status");
+                String sek_id = item.getString("seeker_id");
+                list.add(new BookingDetailsList(Customer_image,customer_name,customer_date,customer_time,customer_service,employee,station,status,transaction_id,sek_id));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -86,17 +95,34 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             e.printStackTrace();
         }
 
+
+
+
+
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CompanyList selectedItem = list.get(i);
+        BookingDetailsList selectedItem = list.get(i);
+        String stationID = getIntent().getStringExtra("sta_id");
+        String stationName = getIntent().getStringExtra("station_name");
+        String serviceName = getIntent().getStringExtra("service_name");
+        String service_id = getIntent().getStringExtra("service_id");
+        String date = getIntent().getStringExtra("date");
+        String time = getIntent().getStringExtra("time");
+        String schedule_id = getIntent().getStringExtra("schedule_id");
         String ID = selectedItem.getId();
-        String name = selectedItem.getName();
-        Intent intent = new Intent(this, ProfileData.class);
-        intent.putExtra("station_id", ID);
-        intent.putExtra("stat_name", name);
+        Intent intent = new Intent(this, Washboy.class);
+        intent.putExtra("v_id", ID);
+        intent.putExtra("s_id", stationID);
+        intent.putExtra("s_name", stationName);
+        intent.putExtra("service_name", serviceName);
+        intent.putExtra("service_id", service_id);
+        intent.putExtra("date", date);
+        intent.putExtra("time", time);
+        intent.putExtra("schedule_id", schedule_id);
         startActivityForResult(intent, 1);
 
 
@@ -124,14 +150,9 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
             startActivity(new Intent(this,DashBoard.class));
         }
         else
-        if (id==R.id.details){
-            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,BookingDetails.class));
-        }
-        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,Vehicle.class));
+            startActivity(new Intent(this, Vehicle.class));
         }
         else
         if (id==R.id.settings){

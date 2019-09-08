@@ -27,11 +27,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Schedule extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class ScheduleOccupied extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
     ListView lv;
-    Button btnOccupied;
+    Button btnVacant;
     SharedPreferences prf;
     ArrayList<ScheduleList> list = new ArrayList<>();
     ScheduleAdapter adapter;
@@ -41,13 +41,13 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule);
+        setContentView(R.layout.schedule_occupied);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        btnOccupied = findViewById(R.id.occupied);
-        btnOccupied.setOnClickListener(this);
+        btnVacant = findViewById(R.id.vacant);
+        btnVacant.setOnClickListener(this);
         this.lv = findViewById(R.id.ListView);
         this.adapter = new ScheduleAdapter(this, list);
         lv.setAdapter(adapter);
@@ -55,12 +55,10 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
 
         String customer_id = prf.getString("seeker_id", "");
         String stations_id = getIntent().getStringExtra("stations_id");
-        String stations_name = getIntent().getStringExtra("st_name");
-        Toast.makeText(getApplicationContext(), stations_name, Toast.LENGTH_SHORT).show();
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_schedule/"+stations_id);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_schdule_occupied/"+stations_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -143,7 +141,7 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
         else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Schedule.class));
+            startActivity(new Intent(this, ScheduleOccupied.class));
         }
         else
         if (id==R.id.settings){
@@ -163,9 +161,9 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
     public void onClick(View view) {
 
         String stations_id = getIntent().getStringExtra("stations_id");
-        Intent intent = new Intent(this, ScheduleOccupied.class);
-        intent.putExtra("stations_id", stations_id);
-        startActivityForResult(intent, 1);
+        Intent vacant = new Intent(this, Schedule.class);
+        vacant.putExtra("stations_id", stations_id);
+        startActivityForResult(vacant, 1);
     }
 //    end of menu
 }

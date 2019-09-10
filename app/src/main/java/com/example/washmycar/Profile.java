@@ -58,6 +58,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         btnAdd = findViewById(R.id.button2);
         btnUpdate.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+        getSupportActionBar().setTitle("Profile");
         String customer_id = prf.getString("seeker_id", "");
 
         try{
@@ -122,6 +123,11 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
         }
         else
         if (id==R.id.vehicle){

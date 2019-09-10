@@ -57,6 +57,7 @@ public class BookingDetails extends AppCompatActivity implements AdapterView.OnI
         //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
         String customer_id = prf.getString("seeker_id", "");
         String picture = prf.getString("seeker_image", "");
+        getSupportActionBar().setTitle("Booking Details");
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
@@ -150,9 +151,14 @@ public class BookingDetails extends AppCompatActivity implements AdapterView.OnI
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Vehicle.class));
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){

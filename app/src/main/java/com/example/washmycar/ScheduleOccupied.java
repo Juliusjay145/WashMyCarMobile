@@ -48,6 +48,7 @@ public class ScheduleOccupied extends AppCompatActivity implements AdapterView.O
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         btnVacant = findViewById(R.id.vacant);
         btnVacant.setOnClickListener(this);
+        getSupportActionBar().setTitle("Occupied Schedules");
         this.lv = findViewById(R.id.ListView);
         this.adapter = new ScheduleAdapter(this, list);
         lv.setAdapter(adapter);
@@ -139,9 +140,14 @@ public class ScheduleOccupied extends AppCompatActivity implements AdapterView.O
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, ScheduleOccupied.class));
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){

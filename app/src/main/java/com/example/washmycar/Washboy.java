@@ -43,6 +43,7 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("Choose Wash Boy");
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.gv = findViewById(R.id.GridView12);
         this.adapter = new WashboyAdapter(this, list);

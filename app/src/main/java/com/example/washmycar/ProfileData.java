@@ -52,6 +52,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         this.adapter = new CarWashOwnerAdapter(this, list);
         lv.setAdapter(adapter);
+        getSupportActionBar().setTitle("Carwash Station Data");
         lv.setOnItemClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");

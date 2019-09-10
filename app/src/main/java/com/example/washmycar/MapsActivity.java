@@ -49,6 +49,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("Maps");
+
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -150,6 +154,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
         }
         else
         if (id==R.id.vehicle){

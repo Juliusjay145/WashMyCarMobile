@@ -15,12 +15,15 @@ public class VihicleProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vihicle_profile);
+        getSupportActionBar().setTitle("Vihicle Profile");
+
     }
 
 
     //menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.commonmenus,menu);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);

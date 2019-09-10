@@ -48,6 +48,7 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         this.lv = findViewById(R.id.ListView);
         this.adapter = new CarProfileAdapter(this, list);
         lv.setAdapter(adapter);
+        getSupportActionBar().setTitle("Vehicle");
         lv.setOnItemClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");
@@ -121,6 +122,11 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
         }
         else
         if (id==R.id.vehicle){

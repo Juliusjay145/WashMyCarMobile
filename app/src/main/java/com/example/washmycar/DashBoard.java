@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +50,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
         this.adapter = new CompanyAdapter(this, list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
+        getSupportActionBar().setTitle("Car Wash Stations");
 
 
 

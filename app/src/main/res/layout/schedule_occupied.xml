@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20px"
         android:layout_marginLeft="20px"
-        android:background="#fefefe"
+        android:background="@drawable/red"
         android:layout_marginBottom="70dp"/>
 
     <LinearLayout

@@ -50,6 +50,7 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
         btnOccupied.setOnClickListener(this);
         this.lv = findViewById(R.id.ListView);
         this.adapter = new ScheduleAdapter(this, list);
+        getSupportActionBar().setTitle("Available Schedules");
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
 
@@ -141,9 +142,14 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Schedule.class));
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){

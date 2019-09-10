@@ -10,16 +10,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                    android:layout_marginTop="20px"
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imageView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30px"
                     android:src="@drawable/accounts"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp" />
 
 
                 <LinearLayout
@@ -39,8 +39,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Customer Name:"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/textview1"
@@ -64,8 +63,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Date:"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
 
                         <TextView
@@ -91,8 +89,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Time:"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/textview3"
@@ -116,9 +113,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
-                            android:text="Service Name"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:text="Service Name:"
+                            android:textSize="20dp" />
                         <TextView
                             android:id="@+id/textview4"
                             android:layout_width="wrap_content"
@@ -142,8 +138,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Employee Name:"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/textview5"
@@ -168,8 +163,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Station Name:"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/textview6"
@@ -194,8 +188,7 @@
                             android:layout_gravity="center_vertical"
                             android:paddingLeft="20dp"
                             android:text="Status"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/textview7"

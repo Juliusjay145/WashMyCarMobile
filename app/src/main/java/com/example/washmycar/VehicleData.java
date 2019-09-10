@@ -45,6 +45,7 @@ public class VehicleData extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vihicle_profile);
+        getSupportActionBar().setTitle("Vehicle Profile");
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
 
         platenumber = findViewById(R.id.txt_plateno);

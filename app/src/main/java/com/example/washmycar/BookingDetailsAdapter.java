@@ -65,7 +65,8 @@ public class BookingDetailsAdapter extends BaseAdapter {
             handler.service_name =  arg1.findViewById(R.id.textview4);
             handler.employee_name =  arg1.findViewById(R.id.textview5);
             handler.station_name =  arg1.findViewById(R.id.textview6);
-            handler.status =  arg1.findViewById(R.id.textview7);
+            handler.price =  arg1.findViewById(R.id.textview7);
+            handler.status =  arg1.findViewById(R.id.textview8);
             arg1.setTag(handler);
         }else
 
@@ -78,6 +79,7 @@ public class BookingDetailsAdapter extends BaseAdapter {
         handler.service_name.setText(list.get(arg0).getService());
         handler.employee_name.setText(list.get(arg0).getEmployee());
         handler.station_name.setText(list.get(arg0).getStation());
+        handler.price.setText(list.get(arg0).getPrice());
         handler.status.setText(list.get(arg0).getStatus());
 
 
@@ -107,7 +109,7 @@ public class BookingDetailsAdapter extends BaseAdapter {
 
     static class CompanyHandler
     {
-        TextView name,date,time,service_name,employee_name,station_name,status;
+        TextView name,date,time,service_name,employee_name,station_name,price,status;
         ImageView image;
     }
 

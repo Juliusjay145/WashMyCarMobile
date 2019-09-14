@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //editor.putString("cust_name", client_name);
                         editor.commit();
                         Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, MapsActivity.class);
+                        Intent intent = new Intent(this, DashBoard.class);
                         startActivity(intent);
                         user.setText("");
                         pass.setText("");

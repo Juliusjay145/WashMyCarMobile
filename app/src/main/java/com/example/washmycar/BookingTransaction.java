@@ -214,7 +214,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 String employee_name = getIntent().getStringExtra("washboy_name");
                 String service_id = getIntent().getStringExtra("service_id");
                 String st_name = getIntent().getStringExtra("station_name");
-
+                String price = getIntent().getStringExtra("price");
                 String se_name = s_name.getText().toString();
                 String w_name = wash_name.getText().toString();
                 String t_time = time1.getText().toString();
@@ -235,6 +235,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
                 nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
                 nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
+                nameValuePairs.add(new BasicNameValuePair("seeker_paid", price));
 
 
 

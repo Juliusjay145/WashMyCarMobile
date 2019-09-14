@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview1"
+                            android:id="@+id/textview11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -67,7 +67,7 @@
 
 
                         <TextView
-                            android:id="@+id/textview2"
+                            android:id="@+id/textview12"
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview3"
+                            android:id="@+id/textview13"
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                             android:text="Service Name:"
                             android:textSize="20dp" />
                         <TextView
-                            android:id="@+id/textview4"
+                            android:id="@+id/textview14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -141,7 +141,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview5"
+                            android:id="@+id/textview15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -166,7 +166,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview6"
+                            android:id="@+id/textview16"
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -191,7 +191,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview7"
+                            android:id="@+id/textview17"
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textview8"
+                            android:id="@+id/textview18"
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -226,8 +226,29 @@
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
+                        <Button
+                            android:id="@+id/book12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/redcancel"
+                            android:text="Cancel"
+                            android:textColor="#fefefe" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

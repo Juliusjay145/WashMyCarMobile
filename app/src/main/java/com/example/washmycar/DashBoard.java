@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -79,6 +80,76 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
                 String CompanyImage = item.getString("path_image");
                 list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
                 adapter.notifyDataSetChanged();
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        String customer_id = prf.getString("seeker_id", "");
+        try{
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_details/"+customer_id);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            InputStream is=conn.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String s=br.readLine();
+
+            is.close();
+            conn.disconnect();
+
+            Log.d("json data", s);
+            JSONObject json=new JSONObject(s);
+            JSONArray array = json.getJSONArray("cwowner_booking");
+            for(int i=0; i<array.length(); i++){
+                JSONObject item = array.getJSONObject(i);
+                String status = item.getString("status");
+
+                if(status.equals("ongoing"))
+                {
+                    AlertDialog dialog = new AlertDialog.Builder(this).create();
+                    dialog.setMessage("Your reservation request has been accept");
+                    dialog.setTitle("Notification");
+                    dialog.show();
+                }
+
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+//            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_details/"+customer_id);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            InputStream is=conn.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String s=br.readLine();
+
+            is.close();
+            conn.disconnect();
+
+            Log.d("json data", s);
+            JSONObject json=new JSONObject(s);
+            JSONArray array = json.getJSONArray("cwowner_booking");
+            for(int i=0; i<array.length(); i++){
+                JSONObject item = array.getJSONObject(i);
+                String status = item.getString("status");
+
+                if(status.equals("decline"))
+                {
+                    AlertDialog dialog = new AlertDialog.Builder(this).create();
+                    dialog.setMessage("Your reservation request has been decline");
+                    dialog.setTitle("Notification");
+                    dialog.show();
+                }
+
             }
         }catch (MalformedURLException e){
             e.printStackTrace();

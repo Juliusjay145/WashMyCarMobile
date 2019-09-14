@@ -54,6 +54,7 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
+        String price = getIntent().getStringExtra("price");
         //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
         String customer_id = prf.getString("seeker_id", "");
 
@@ -105,6 +106,7 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
+        String price = getIntent().getStringExtra("price");
         String ID = selectedItem.getId();
         Intent intent = new Intent(this, Washboy.class);
         intent.putExtra("v_id", ID);
@@ -115,6 +117,7 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         intent.putExtra("date", date);
         intent.putExtra("time", time);
         intent.putExtra("schedule_id", schedule_id);
+        intent.putExtra("price", price);
         startActivityForResult(intent, 1);
 
 

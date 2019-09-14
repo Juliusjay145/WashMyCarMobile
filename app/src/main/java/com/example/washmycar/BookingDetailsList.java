@@ -2,10 +2,10 @@ package com.example.washmycar;
 
 public class BookingDetailsList {
 
-    String image,name,date,time,service,employee,station,status,id,seek_id;
+    String image,name,date,time,service,employee,station,price,status,id,seek_id;
 
     public BookingDetailsList(String image,String name,
-                              String date, String time, String service, String employee, String station,String status,String id,String seek_id){
+                              String date, String time, String service, String employee, String station, String price,String status,String id,String seek_id){
         super();
         this.image = image;
         this.name = name;
@@ -14,6 +14,7 @@ public class BookingDetailsList {
         this.service = service;
         this.employee = employee;
         this.station= station;
+        this.price = price;
         this.status = status;
         this.id = id;
         this.seek_id = seek_id;
@@ -74,6 +75,16 @@ public class BookingDetailsList {
 
     public void setStation(String station) {
         this.station = station;
+    }
+
+    //price
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getStatus() {

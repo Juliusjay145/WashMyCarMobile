@@ -106,6 +106,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         String StationName = selectedItem.getName();
         String sID = getIntent().getStringExtra("stations_id");
         String schedule_id = getIntent().getStringExtra("schedule_id");
+        String price = selectedItem.getPrice();
         String sname = getIntent().getStringExtra("st_name");
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
@@ -117,6 +118,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         intent.putExtra("date", date);
         intent.putExtra("time", time);
         intent.putExtra("schedule_id", schedule_id);
+        intent.putExtra("price", price);
         startActivityForResult(intent, 1);
 
 

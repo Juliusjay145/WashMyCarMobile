@@ -58,7 +58,7 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
-
+        String price = getIntent().getStringExtra("price");
         Toast.makeText(getApplicationContext(), stationName, Toast.LENGTH_SHORT).show();
 
         try{
@@ -104,6 +104,7 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String ID = selectedItem.getId();
         String washboy_name = selectedItem.getName();
         String sID = getIntent().getStringExtra("s_id"); //station id
+        String price = getIntent().getStringExtra("price");
         String serviceName = getIntent().getStringExtra("service_name"); //service name
         String stationName = getIntent().getStringExtra("s_name"); // station name
         String vehicle_id = getIntent().getStringExtra("v_id"); //vehicle id
@@ -121,6 +122,7 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         intent.putExtra("service_id", service_id);
         intent.putExtra("date", date);
         intent.putExtra("time", time);
+        intent.putExtra("price", price);
         intent.putExtra("schedule_id", schedule_id);
         startActivityForResult(intent, 1);
     }

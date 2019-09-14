@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/accounts"
+            android:src="@drawable/logo2"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
 
@@ -59,9 +59,9 @@
             android:id="@+id/imageView2"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:layout_marginTop="-25dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="-34dp"
+            android:layout_marginLeft="-74dp"
+            android:layout_marginTop="-25dp"
             app:srcCompat="@drawable/piso" />
     </LinearLayout>
 

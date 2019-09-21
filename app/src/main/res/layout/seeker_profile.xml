@@ -138,7 +138,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_buttons2"
-                android:text="Add Vihicle"
+                android:text="Add Vehicle"
                 android:textColor="#fefefe" />
         </LinearLayout>
 

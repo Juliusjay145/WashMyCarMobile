@@ -169,38 +169,48 @@ public class VehicleUpdate extends AppCompatActivity implements AdapterView.OnIt
         String p_color = color.getText().toString();
         String p_type = type.getText().toString();
 
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-        nameValuePairs.add(new BasicNameValuePair("cwsv_plateno", p_number));
-        nameValuePairs.add(new BasicNameValuePair("cwsv_brand", p_brand));
-        nameValuePairs.add(new BasicNameValuePair("cwsv_model", p_model));
-        nameValuePairs.add(new BasicNameValuePair("cwsv_color", p_color));
-        nameValuePairs.add(new BasicNameValuePair("cwsv_type", p_type));
-
-        try{
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_vehicle_update/"+vehicle_id);
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            InputStream is;
-            is=entity.getContent();
-            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, VehicleData.class);
-            startActivity(intent);
-
-
-
-        }
-        catch(ClientProtocolException e)
+        if(p_number.equals("") || p_brand.equals("") || p_model.equals("") || p_color.equals("") || p_type.equals(""))
         {
-            Log.e("ClientProtocol","Log_tag");
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "All Fields Are Required", Toast.LENGTH_SHORT).show();
         }
-        catch(IOException e)
-        {
-            Log.e("Log_tag", "IOException");
-            e.printStackTrace();
-        }
+
+        else
+            {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                nameValuePairs.add(new BasicNameValuePair("cwsv_plateno", p_number));
+                nameValuePairs.add(new BasicNameValuePair("cwsv_brand", p_brand));
+                nameValuePairs.add(new BasicNameValuePair("cwsv_model", p_model));
+                nameValuePairs.add(new BasicNameValuePair("cwsv_color", p_color));
+                nameValuePairs.add(new BasicNameValuePair("cwsv_type", p_type));
+
+                try{
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_vehicle_update/"+vehicle_id);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                    InputStream is;
+                    is=entity.getContent();
+                    Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, VehicleData.class);
+                    startActivity(intent);
+
+
+
+                }
+                catch(ClientProtocolException e)
+                {
+                    Log.e("ClientProtocol","Log_tag");
+                    e.printStackTrace();
+                }
+                catch(IOException e)
+                {
+                    Log.e("Log_tag", "IOException");
+                    e.printStackTrace();
+                }
+            }
+
+
 
 
 

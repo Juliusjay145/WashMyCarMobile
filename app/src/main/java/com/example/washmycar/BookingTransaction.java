@@ -3,6 +3,7 @@ package com.example.washmycar;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -47,6 +49,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BookingTransaction extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener {
@@ -58,6 +61,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
     SharedPreferences prf;
 
     DateFormat format=DateFormat.getDateInstance();
+    @SuppressLint("NewApi")
     Calendar calendar=Calendar.getInstance();
     @SuppressLint("NewApi")
     int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -96,7 +100,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
 
         btnBooking.setOnClickListener(this);
-        //time.setOnClickListener(this);
+        time1.setOnClickListener(this);
+        date2.setOnClickListener(this);
 
         String customer_id = prf.getString("seeker_id", "");
         String picture = prf.getString("seeker_image", "");
@@ -163,6 +168,24 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
     //    end of menu
 
+
+
+
+    DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+
+        @SuppressLint("NewApi")
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+            calendar.set(Calendar.YEAR, arg1);
+            calendar.set(Calendar.MONTH, arg2);
+            calendar.set(Calendar.DAY_OF_MONTH, arg3);
+            date2.setText(format.format(calendar.getTime()));
+        }
+    };
+
+
+    @SuppressLint("NewApi")
     @Override
     public void onClick(View view) {
 
@@ -221,88 +244,102 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 String t_date = date2.getText().toString();
                 String t_about = about.getText().toString();
 
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("station_id", station_id));
-                nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
-                nameValuePairs.add(new BasicNameValuePair("cwsv_id", vehicle_id));
-                nameValuePairs.add(new BasicNameValuePair("service_id", service_id));
-                nameValuePairs.add(new BasicNameValuePair("seeker_about", t_about));
-                nameValuePairs.add(new BasicNameValuePair("seeker_date", t_date));
-                nameValuePairs.add(new BasicNameValuePair("seeker_time", t_time));
-                nameValuePairs.add(new BasicNameValuePair("seeker_name", customer_name));
-                nameValuePairs.add(new BasicNameValuePair("service_name", se_name));
-                nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
-                nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
-                nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
-                nameValuePairs.add(new BasicNameValuePair("seeker_paid", price));
-
-
-
-                try{
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/booking");
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                    HttpResponse response = httpClient.execute(httpPost);
-                    HttpEntity entity = response.getEntity();
-                    is=entity.getContent();
-                    Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, BookingDetails.class);
-                    startActivity(intent1);
-                    //			txtname.setText("");
-                    //			address.setText(caddress);
-                    //			txtcontact.setText("");
-                    //			txtusername.setText("");
-                    //			txtpassword.setText("");
-
-
-                }
-                catch(ClientProtocolException e)
+                if(calendar.getTime().before(new Date()))
                 {
-                    Log.e("ClientProtocol","Log_tag");
-                    e.printStackTrace();
-                }
-                catch(IOException e)
-                {
-                    Log.e("Log_tag", "IOException");
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Invalid Past Date", Toast.LENGTH_SHORT).show();
                 }
 
-                String schedule_id = getIntent().getStringExtra("schedule_id");
-                try{
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/schedule_update/"+schedule_id);
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                    HttpResponse response = httpClient.execute(httpPost);
-                    HttpEntity entity = response.getEntity();
-                    is=entity.getContent();
-                    Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, BookingDetails.class);
-                    startActivity(intent1);
-                    //			txtname.setText("");
-                    //			address.setText(caddress);
-                    //			txtcontact.setText("");
-                    //			txtusername.setText("");
-                    //			txtpassword.setText("");
+                else{
+                    List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                    nameValuePairs.add(new BasicNameValuePair("station_id", station_id));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
+                    nameValuePairs.add(new BasicNameValuePair("cwsv_id", vehicle_id));
+                    nameValuePairs.add(new BasicNameValuePair("service_id", service_id));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_about", t_about));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_date", t_date));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_time", t_time));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_name", customer_name));
+                    nameValuePairs.add(new BasicNameValuePair("service_name", se_name));
+                    nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
+                    nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_paid", price));
 
 
+
+                    try{
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/booking");
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpResponse response = httpClient.execute(httpPost);
+                        HttpEntity entity = response.getEntity();
+                        is=entity.getContent();
+                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(this, BookingDetails.class);
+                        startActivity(intent1);
+                        //			txtname.setText("");
+                        //			address.setText(caddress);
+                        //			txtcontact.setText("");
+                        //			txtusername.setText("");
+                        //			txtpassword.setText("");
+
+
+                    }
+                    catch(ClientProtocolException e)
+                    {
+                        Log.e("ClientProtocol","Log_tag");
+                        e.printStackTrace();
+                    }
+                    catch(IOException e)
+                    {
+                        Log.e("Log_tag", "IOException");
+                        e.printStackTrace();
+                    }
+
+                    String schedule_id = getIntent().getStringExtra("schedule_id");
+                    try{
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/schedule_update/"+schedule_id);
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpResponse response = httpClient.execute(httpPost);
+                        HttpEntity entity = response.getEntity();
+                        is=entity.getContent();
+                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(this, BookingDetails.class);
+                        startActivity(intent1);
+                        //			txtname.setText("");
+                        //			address.setText(caddress);
+                        //			txtcontact.setText("");
+                        //			txtusername.setText("");
+                        //			txtpassword.setText("");
+
+
+                    }
+                    catch(ClientProtocolException e)
+                    {
+                        Log.e("ClientProtocol","Log_tag");
+                        e.printStackTrace();
+                    }
+                    catch(IOException e)
+                    {
+                        Log.e("Log_tag", "IOException");
+                        e.printStackTrace();
+                    }
+
                 }
-                catch(ClientProtocolException e)
-                {
-                    Log.e("ClientProtocol","Log_tag");
-                    e.printStackTrace();
-                }
-                catch(IOException e)
-                {
-                    Log.e("Log_tag", "IOException");
-                    e.printStackTrace();
-                }
+
+
 
                 break;
 
-//            case R.id.editText3:
-////                timePickerDialog.show();
-////                break;
+            case R.id.editText3:
+                timePickerDialog.show();
+                break;
+
+            case R.id.editText4:
+                new DatePickerDialog(this,listener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+                break;
+
 
 
 

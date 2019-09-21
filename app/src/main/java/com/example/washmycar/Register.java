@@ -182,44 +182,57 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String r_contact = contact.getText().toString();
                 String r_address = address.getText().toString();
 
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("seeker_name", r_name));
-                nameValuePairs.add(new BasicNameValuePair("seeker_email", r_email));
-                nameValuePairs.add(new BasicNameValuePair("seeker_password", r_password));
-                nameValuePairs.add(new BasicNameValuePair("seeker_telephone", r_contact));
-                nameValuePairs.add(new BasicNameValuePair("seeker_address", r_address));
-                nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
-
-                try{
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/register");
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                    HttpResponse response = httpClient.execute(httpPost);
-                    HttpEntity entity = response.getEntity();
-                    is=entity.getContent();
-                    Toast.makeText(getApplicationContext(), "Register", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, MainActivity.class);
-                    startActivity(intent1);
-                    //			txtname.setText("");
-                    //			address.setText(caddress);
-                    //			txtcontact.setText("");
-                    //			txtusername.setText("");
-                    //			txtpassword.setText("");
-
-
-                }
-                catch(ClientProtocolException e)
+                if(r_name.equals("") || r_email.equals("") || r_password.equals("") || r_contact.equals("") || r_address.equals(""))
                 {
-                    Log.e("ClientProtocol","Log_tag");
-                    e.printStackTrace();
-                }
-                catch(IOException e)
-                {
-                    Log.e("Log_tag", "IOException");
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Required All Fields", Toast.LENGTH_SHORT).show();
                 }
 
-                break;
+                else {
+
+                    List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                    nameValuePairs.add(new BasicNameValuePair("seeker_name", r_name));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_email", r_email));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_password", r_password));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_telephone", r_contact));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_address", r_address));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
+
+                    try{
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/register");
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpResponse response = httpClient.execute(httpPost);
+                        HttpEntity entity = response.getEntity();
+                        is=entity.getContent();
+                        Toast.makeText(getApplicationContext(), "Register", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(this, MainActivity.class);
+                        startActivity(intent1);
+                        //			txtname.setText("");
+                        //			address.setText(caddress);
+                        //			txtcontact.setText("");
+                        //			txtusername.setText("");
+                        //			txtpassword.setText("");
+
+
+                    }
+                    catch(ClientProtocolException e)
+                    {
+                        Log.e("ClientProtocol","Log_tag");
+                        e.printStackTrace();
+                    }
+                    catch(IOException e)
+                    {
+                        Log.e("Log_tag", "IOException");
+                        e.printStackTrace();
+                    }
+
+                    break;
+
+
+                }
+
+
+
 
 
 

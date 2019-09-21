@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         user.setText("");
                         pass.setText("");
                     }else{
-                        Toast.makeText(this,"False",Toast.LENGTH_SHORT).show();
                         user.setText("");
                         pass.setText("");
                     }

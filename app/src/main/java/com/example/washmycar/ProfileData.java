@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     ArrayList<CarWashOwnerList> list = new ArrayList<>();
     CarWashOwnerAdapter adapter;
     Button btnNext;
+    TextView rateus;
     private MenuItem item;
 
 
@@ -43,26 +45,30 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-        prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        this.lv = findViewById(R.id.ListView);
-        btnNext = findViewById(R.id.book1);
-        btnNext.setOnClickListener(this);
+        getSupportActionBar().setTitle("Carwash Station Data");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        prf = getSharedPreferences("user_details", MODE_PRIVATE);
+        this.lv = findViewById(R.id.ListView);
         this.adapter = new CarWashOwnerAdapter(this, list);
         lv.setAdapter(adapter);
-        getSupportActionBar().setTitle("Carwash Station Data");
         lv.setOnItemClickListener(this);
+
+        btnNext = findViewById(R.id.book1);
+        btnNext.setOnClickListener(this);
+
+        rateus = findViewById(R.id.star);
+        rateus.setOnClickListener(this);
+
+
+
+
 
         String customer_id = prf.getString("seeker_id", "");
         String stations_id = getIntent().getStringExtra("station_id");
         String stations_name = getIntent().getStringExtra("stat_name");
 
-
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
-        StrictMode.setThreadPolicy(policy);
 
 
         try{
@@ -100,17 +106,13 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
 
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        CarWashOwnerList selectedItem = list.get(i);
-        String ID = selectedItem.getId();
-//        Intent intent = new Intent(this, CateringProfile.class);
-//        intent.putExtra("catering_id", ID);
-//        startActivityForResult(intent, 1);
+        Toast.makeText(getApplicationContext(), "Click", Toast.LENGTH_SHORT).show();
 
     }
-
 
     //menus
     @Override
@@ -143,13 +145,28 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        String stations_id = getIntent().getStringExtra("station_id");
-        String stations_name = getIntent().getStringExtra("stat_name");
-        Intent intent = new Intent(this, Schedule.class);
-        intent.putExtra("stations_id", stations_id);
-        intent.putExtra("st_name", stations_name);
-        startActivityForResult(intent, 1);
+      if(view == btnNext)
+      {
+          String stations_id = getIntent().getStringExtra("station_id");
+          String stations_name = getIntent().getStringExtra("stat_name");
+          Intent intent = new Intent(this, CarWashStationService.class);
+          intent.putExtra("stations_id", stations_id);
+          intent.putExtra("st_name", stations_name);
+          startActivityForResult(intent, 1);
+      }
+
+      if(view == rateus)
+      {
+          String stations_id = getIntent().getStringExtra("station_id");
+          Intent intent = new Intent(this, AddRating.class);
+          intent.putExtra("stations_id", stations_id);
+          startActivityForResult(intent, 1);
+      }
+
+
 
     }
+
+
 //    end of menu
 }

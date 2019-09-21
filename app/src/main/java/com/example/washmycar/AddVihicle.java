@@ -234,43 +234,53 @@ public class AddVihicle extends AppCompatActivity implements AdapterView.OnItemS
                 String p_color = color.getText().toString();
                 String v_type = vehicle_type.getSelectedItem().toString();
 
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
-                nameValuePairs.add(new BasicNameValuePair("plate_number", p_number));
-                nameValuePairs.add(new BasicNameValuePair("brand_name", b_name));
-                nameValuePairs.add(new BasicNameValuePair("color", p_color));
-                nameValuePairs.add(new BasicNameValuePair("model", model_carwash));
-                nameValuePairs.add(new BasicNameValuePair("vehicle_type", v_type));
-                nameValuePairs.add(new BasicNameValuePair("image_vehicle", picture));
-
-                try{
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/add_vehicle");
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                    HttpResponse response = httpClient.execute(httpPost);
-                    HttpEntity entity = response.getEntity();
-                    is=entity.getContent();
-                    Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(this, Profile.class);
-                    startActivity(intent1);
-                    //			txtname.setText("");
-                    //			address.setText(caddress);
-                    //			txtcontact.setText("");
-                    //			txtusername.setText("");
-                    //			txtpassword.setText("");
-
-
-                }
-                catch(ClientProtocolException e)
+                if(p_number.equals("") || b_name.equals("") || model_carwash.equals("") || p_color.equals("") || v_type.equals("") || picture.equals(""))
                 {
-                    Log.e("ClientProtocol","Log_tag");
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }
-                catch(IOException e)
-                {
-                    Log.e("Log_tag", "IOException");
-                    e.printStackTrace();
-                }
+
+                else
+                    {
+                        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                        nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
+                        nameValuePairs.add(new BasicNameValuePair("plate_number", p_number));
+                        nameValuePairs.add(new BasicNameValuePair("brand_name", b_name));
+                        nameValuePairs.add(new BasicNameValuePair("color", p_color));
+                        nameValuePairs.add(new BasicNameValuePair("model", model_carwash));
+                        nameValuePairs.add(new BasicNameValuePair("vehicle_type", v_type));
+                        nameValuePairs.add(new BasicNameValuePair("image_vehicle", picture));
+
+                        try{
+                            HttpClient httpClient = new DefaultHttpClient();
+                            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/add_vehicle");
+                            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                            HttpResponse response = httpClient.execute(httpPost);
+                            HttpEntity entity = response.getEntity();
+                            is=entity.getContent();
+                            Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent1 = new Intent(this, Profile.class);
+                            startActivity(intent1);
+                            //			txtname.setText("");
+                            //			address.setText(caddress);
+                            //			txtcontact.setText("");
+                            //			txtusername.setText("");
+                            //			txtpassword.setText("");
+
+
+                        }
+                        catch(ClientProtocolException e)
+                        {
+                            Log.e("ClientProtocol","Log_tag");
+                            e.printStackTrace();
+                        }
+                        catch(IOException e)
+                        {
+                            Log.e("Log_tag", "IOException");
+                            e.printStackTrace();
+                        }
+                    }
+
+
 
                 break;
 

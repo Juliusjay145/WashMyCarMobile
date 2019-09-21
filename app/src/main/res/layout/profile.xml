@@ -6,13 +6,21 @@
     android:background="#fefefe"
     tools:context=".DashBoard" >
 
+    <TextView
+        android:id="@+id/star"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Rate Us!"
+        android:textSize="25dp" />
 
     <ListView
         android:id="@+id/ListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="70dp" />
 
         <Button
             android:id="@+id/book1"

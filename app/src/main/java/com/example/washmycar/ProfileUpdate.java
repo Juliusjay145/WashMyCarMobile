@@ -164,37 +164,47 @@ public class ProfileUpdate extends AppCompatActivity implements AdapterView.OnIt
         String s_address = address.getText().toString();
         String s_phone = phone.getText().toString();
 
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-        nameValuePairs.add(new BasicNameValuePair("seeker_name", s_name));
-        nameValuePairs.add(new BasicNameValuePair("seeker_email", s_email));
-        nameValuePairs.add(new BasicNameValuePair("seeker_address", s_address));
-        nameValuePairs.add(new BasicNameValuePair("seeker_telephone", s_phone));
-
-        try{
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_update/"+customer_id);
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            InputStream is;
-            is=entity.getContent();
-            Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, Profile.class);
-            startActivity(intent);
-
-
-
-        }
-        catch(ClientProtocolException e)
+        if(s_name.equals("") || s_email.equals("") || s_address.equals("") || s_phone.equals(""))
         {
-            Log.e("ClientProtocol","Log_tag");
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "All Fields Are Required", Toast.LENGTH_SHORT).show();
         }
-        catch(IOException e)
-        {
-            Log.e("Log_tag", "IOException");
-            e.printStackTrace();
-        }
+
+        else
+            {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                nameValuePairs.add(new BasicNameValuePair("seeker_name", s_name));
+                nameValuePairs.add(new BasicNameValuePair("seeker_email", s_email));
+                nameValuePairs.add(new BasicNameValuePair("seeker_address", s_address));
+                nameValuePairs.add(new BasicNameValuePair("seeker_telephone", s_phone));
+
+                try{
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/seeker_update/"+customer_id);
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                    InputStream is;
+                    is=entity.getContent();
+                    Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, Profile.class);
+                    startActivity(intent);
+
+
+
+                }
+                catch(ClientProtocolException e)
+                {
+                    Log.e("ClientProtocol","Log_tag");
+                    e.printStackTrace();
+                }
+                catch(IOException e)
+                {
+                    Log.e("Log_tag", "IOException");
+                    e.printStackTrace();
+                }
+            }
+
+
 
 
 

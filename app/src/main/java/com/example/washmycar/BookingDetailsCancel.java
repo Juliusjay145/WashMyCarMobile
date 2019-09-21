@@ -2,6 +2,7 @@ package com.example.washmycar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ public class BookingDetailsCancel extends AppCompatActivity implements AdapterVi
 
 
     TextView txtname,txtdate,txttime,txtservice,txtemployee,txtstation,txtprice,txtstatus;
+    ImageView img;
     InputStream is;
     Button btnCancel;
     SharedPreferences prf;
@@ -64,6 +67,7 @@ public class BookingDetailsCancel extends AppCompatActivity implements AdapterVi
         txtstation = findViewById(R.id.textview16);
         txtprice = findViewById(R.id.textview17);
         txtstatus = findViewById(R.id.textview18);
+        img = findViewById(R.id.imageView);
 
         btnCancel = findViewById(R.id.book12);
 
@@ -115,6 +119,7 @@ public class BookingDetailsCancel extends AppCompatActivity implements AdapterVi
                 txtstation.setText(station);
                 txtprice.setText(price);
                 txtstatus.setText(status);
+                img.setImageBitmap(BitmapFactory.decodeFile(Customer_image));
 
             }
         }catch (MalformedURLException e){

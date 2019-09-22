@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B49EA"
+    android:background="#fefefe"
     tools:context=".DashBoard" >
 
     <GridView
         android:id="@+id/GridView12"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         android:background="#fefefe"

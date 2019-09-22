@@ -45,7 +45,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-        getSupportActionBar().setTitle("Carwash Station Data");
+        getSupportActionBar().setTitle("Station Profile");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);

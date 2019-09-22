@@ -86,6 +86,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("Booking Transaction");
+
 
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         s_name = findViewById(R.id.editText1);

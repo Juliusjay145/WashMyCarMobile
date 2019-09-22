@@ -44,6 +44,7 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("Choose Vehicle");
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.lv = findViewById(R.id.ListView);
         this.adapter = new CarProfileAdapter(this, list);

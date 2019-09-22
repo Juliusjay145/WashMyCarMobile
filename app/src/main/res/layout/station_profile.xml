@@ -63,7 +63,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/email"/>
+                    android:src="@drawable/home"/>
 
                 <TextView
                     android:id="@+id/textview2"
@@ -107,7 +107,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/email"/>
+                    android:src="@drawable/description"/>
 
                 <TextView
                     android:id="@+id/textview4"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:text="Vision"
+                    android:text="Description"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>

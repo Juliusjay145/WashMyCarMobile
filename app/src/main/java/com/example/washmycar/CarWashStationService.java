@@ -47,6 +47,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("Station Services");
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
         this.gv = findViewById(R.id.GridView1);
         this.adapter = new ServiceAdapter(this, list);

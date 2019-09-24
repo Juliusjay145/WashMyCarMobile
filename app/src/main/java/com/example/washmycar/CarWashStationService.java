@@ -59,6 +59,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         String schedule_id = getIntent().getStringExtra("schedule_id");
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
+        String wallet = getIntent().getStringExtra("wallet");
         Toast.makeText(getApplicationContext(), ID, Toast.LENGTH_SHORT).show();
 
         try{
@@ -111,6 +112,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         String sname = getIntent().getStringExtra("st_name");
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
+        String wallet = getIntent().getStringExtra("wallet");
         Intent intent = new Intent(this, MyVehicle.class);
         intent.putExtra("service_id", ID);
         intent.putExtra("sta_id", sID);
@@ -120,6 +122,7 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         intent.putExtra("time", time);
         intent.putExtra("schedule_id", schedule_id);
         intent.putExtra("price", price);
+        intent.putExtra("wallet", wallet);
         startActivityForResult(intent, 1);
 
 
@@ -145,6 +148,11 @@ public class CarWashStationService extends AppCompatActivity implements AdapterV
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
         }
         else
         if (id==R.id.vehicle){

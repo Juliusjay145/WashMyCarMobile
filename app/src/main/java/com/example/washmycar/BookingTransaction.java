@@ -52,10 +52,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 public class BookingTransaction extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener {
 
     private MenuItem item;
-    EditText s_name,wash_name,time1,date2,about;
+    EditText s_name,wash_name,time1,date2,about,amount,total;
     Button btnBooking;
     InputStream is;
     SharedPreferences prf;
@@ -95,8 +97,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         time1 = findViewById(R.id.editText3);
         date2 = findViewById(R.id.editText4);
         about = findViewById(R.id.editText5);
-
-
+        amount = findViewById(R.id.editText6);
+        total = findViewById(R.id.editText7);
 
         btnBooking = findViewById(R.id.book1);
 
@@ -115,12 +117,43 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
         String st_name = getIntent().getStringExtra("station_name");
-        Toast.makeText(getApplicationContext(), st_name, Toast.LENGTH_SHORT).show();
+        String pic = getIntent().getStringExtra("pic");
+        String price = getIntent().getStringExtra("price");
+        String owallet = getIntent().getStringExtra("wallet");
+        String swallet = prf.getString("seeker_wallet", "");
+        //Toast.makeText(getApplicationContext(), st_name, Toast.LENGTH_SHORT).show();
+
+
 
         s_name.setText(service_name);
         wash_name.setText(washboy_name);
         time1.setText(time);
         date2.setText(date);
+        String[] temprice = price.split(" ");
+        float lowprice = Float.parseFloat(temprice[0]);
+        float discountprice = (float) (lowprice*.50);
+        String finald = Float.toString(discountprice);
+        amount.setText(finald);
+
+        float station_wallet = Float.parseFloat(owallet);
+        float overall_station_wallet = station_wallet + discountprice;
+        String amount_wallet = Float.toString(overall_station_wallet);
+        total.setText(amount_wallet);
+
+//        //Insuffecient Coins
+//        if(Float.parseFloat(swallet) < discountprice){
+//            Toast.makeText(this,"Insuffecient Coins", Toast.LENGTH_SHORT).show();
+//        }else{
+//            float deducted_seeker_wallet = Float.parseFloat(swallet) - discountprice;
+//        }
+//
+//        Toast.makeText(getApplicationContext(), swallet, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
 
 
 
@@ -232,6 +265,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
                 String customer_id = prf.getString("seeker_id", "");
                 String picture = prf.getString("seeker_image", "");
+                String pic = getIntent().getStringExtra("pic");
                 String customer_name = prf.getString("seeker_name", "");
                 String station_id = getIntent().getStringExtra("station_id");
                 String serv_name = getIntent().getStringExtra("service_name");
@@ -240,11 +274,35 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 String service_id = getIntent().getStringExtra("service_id");
                 String st_name = getIntent().getStringExtra("station_name");
                 String price = getIntent().getStringExtra("price");
+                String owallet = getIntent().getStringExtra("wallet");
+                String swallet = prf.getString("seeker_wallet", "");
                 String se_name = s_name.getText().toString();
                 String w_name = wash_name.getText().toString();
                 String t_time = time1.getText().toString();
                 String t_date = date2.getText().toString();
                 String t_about = about.getText().toString();
+                String t_amount = amount.getText().toString();
+                String t_wallet = total.getText().toString();
+
+
+
+                String[] temprice = price.split(" ");
+                float lowprice = Float.parseFloat(temprice[0]);
+                float discountprice = (float) (lowprice*.50);
+                String finald = Float.toString(discountprice);
+                amount.setText(finald);
+
+                float station_wallet = Float.parseFloat(owallet);
+                float overall_station_wallet = station_wallet + discountprice;
+                String amount_wallet = Float.toString(overall_station_wallet);
+                total.setText(amount_wallet);
+
+//                Insuffecient Coins
+                if(Float.parseFloat(swallet) < discountprice){
+                    Toast.makeText(this,"Insuffecient Coins: "+swallet, Toast.LENGTH_SHORT).show();
+                }
+
+                else{
 
                 if(calendar.getTime().before(new Date()))
                 {
@@ -264,8 +322,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                     nameValuePairs.add(new BasicNameValuePair("service_name", se_name));
                     nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
                     nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
-                    nameValuePairs.add(new BasicNameValuePair("seeker_image", picture));
-                    nameValuePairs.add(new BasicNameValuePair("seeker_paid", price));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_image", pic));
+                    nameValuePairs.add(new BasicNameValuePair("seeker_paid", t_amount));
 
 
 
@@ -297,11 +355,13 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                         Log.e("Log_tag", "IOException");
                         e.printStackTrace();
                     }
-
+                    //wash history
                     String schedule_id = getIntent().getStringExtra("schedule_id");
+                    nameValuePairs.add(new BasicNameValuePair("carwash_date", t_date));
+
                     try{
                         HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/schedule_update/"+schedule_id);
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/vehicle_update/"+vehicle_id);
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = httpClient.execute(httpPost);
                         HttpEntity entity = response.getEntity();
@@ -327,6 +387,39 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                         Log.e("Log_tag", "IOException");
                         e.printStackTrace();
                     }
+                    //to pay
+                    nameValuePairs.add(new BasicNameValuePair("station_wallet", t_wallet));
+
+                    try{
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/wallet/"+station_id);
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpResponse response = httpClient.execute(httpPost);
+                        HttpEntity entity = response.getEntity();
+                        is=entity.getContent();
+                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(this, BookingDetails.class);
+                        startActivity(intent1);
+                        //			txtname.setText("");
+                        //			address.setText(caddress);
+                        //			txtcontact.setText("");
+                        //			txtusername.setText("");
+                        //			txtpassword.setText("");
+
+
+                    }
+                    catch(ClientProtocolException e)
+                    {
+                        Log.e("ClientProtocol","Log_tag");
+                        e.printStackTrace();
+                    }
+                    catch(IOException e)
+                    {
+                        Log.e("Log_tag", "IOException");
+                        e.printStackTrace();
+                    }
+
+                }
 
                 }
 

@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.maps.model.Dash;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -102,6 +104,11 @@ public class AddRating extends AppCompatActivity implements View.OnClickListener
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,Vehicle.class));
@@ -136,21 +143,17 @@ public class AddRating extends AppCompatActivity implements View.OnClickListener
 
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
-                nameValuePairs.add(new BasicNameValuePair("station_id", caterings_id));
-                nameValuePairs.add(new BasicNameValuePair("seeker_name", customer_name));
                 nameValuePairs.add(new BasicNameValuePair("rating", starko));
-                nameValuePairs.add(new BasicNameValuePair("path_image", picture));
                 try{
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/AndroidController/add_rating");
+                    HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/AndroidController/rating_update/"+ caterings_id);
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpClient.execute(httpPost);
                     HttpEntity entity = response.getEntity();
                     is=entity.getContent();
                     Toast.makeText(getApplicationContext(), "Rated Successfully", Toast.LENGTH_SHORT).show();
-        //            Intent intent = new Intent(this, client.class);
-        //            startActivity(intent);
+                    Intent intent = new Intent(this, DashBoard.class);
+                    startActivity(intent);
 
                 }
                 catch(ClientProtocolException e)

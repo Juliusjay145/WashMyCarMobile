@@ -34,9 +34,29 @@ public class VihicleProfile extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
         int id = item.getItemId();
+        if (id==R.id.maps){
+            Toast.makeText(this, "Maps", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MapsActivity.class));
+        }
+        else
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
+        if (id==R.id.vehicle){
+            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){

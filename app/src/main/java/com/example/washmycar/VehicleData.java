@@ -141,6 +141,11 @@ public class VehicleData extends AppCompatActivity implements View.OnClickListen
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,Vehicle.class));

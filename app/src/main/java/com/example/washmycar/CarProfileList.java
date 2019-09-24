@@ -2,13 +2,14 @@ package com.example.washmycar;
 
 public class CarProfileList {
 
-    private String image,id, name;
+    private String image,id, name,date;
 
-    public CarProfileList(String image, String id, String name) {
+    public CarProfileList(String image, String id, String name, String date) {
         super();
         this.image = image;
         this.id = id;
         this.name = name;
+        this.date = date;
     }
 
     public String getId() {
@@ -35,20 +36,11 @@ public class CarProfileList {
         this.image = image;
     }
 
+    public String getDate() {
+        return date;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

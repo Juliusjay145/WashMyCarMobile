@@ -2,9 +2,9 @@ package com.example.washmycar;
 
 public class CarWashOwnerList {
 
-    private String image,id, name, address, tel, desc;
+    private String image,id, name, address, tel, desc, station_wallet;
 
-    public CarWashOwnerList(String image, String id, String name, String address, String tel, String desc) {
+    public CarWashOwnerList(String image, String id, String name, String address, String tel, String desc, String station_wallet) {
         super();
         this.image = image;
         this.id = id;
@@ -12,6 +12,7 @@ public class CarWashOwnerList {
         this.address = address;
         this.tel = tel;
         this.desc = desc;
+        this.station_wallet = station_wallet;
     }
 
     public String getId() {
@@ -49,5 +50,11 @@ public class CarWashOwnerList {
     public String getDesc() { return desc; }
 
     public void  setDesc(String desc) {  this.tel = desc; }
+
+    public String getStation_wallet() { return station_wallet; }
+
+    public void  setStation_wallet(String desc) {  this.station_wallet = station_wallet; }
+
+
 
 }

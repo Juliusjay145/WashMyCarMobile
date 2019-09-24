@@ -16,6 +16,11 @@
         android:title="Home"
         app:showAsAction="never" />
     <item
+        android:id="@+id/favorites"
+        android:checkable="false"
+        android:title="My Favorites"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/details"
         android:checkable="false"
         android:title="My Details"

@@ -35,6 +35,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener{
 
     private GoogleMap mMap;
@@ -109,11 +110,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String long_i = item.getString("longitude");
 
 
-
                     mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(lat_i), Double.parseDouble(long_i)))
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                     );
+
 
             }
 
@@ -126,6 +127,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+
+//    public static String getDistance(double lat_a, double lng_a, double lat_b, double lng_b)
+//    {
+//        double earthRadius = 3658.75;
+//        double latDiff = Math.toRadians(lat_b - lat_a);
+//        double lngDiff = Math.toRadians(lng_b - lng_a);
+//        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2)
+//           + Math.cos(Math.toRadians(lat_a))
+//           * Math.cos(Math.toRadians(lat_b)) * Math.sin(lngDiff / 2)
+//           * Math.sin(lngDiff / 2);
+//
+//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//        double distance = earthRadius * c;
+//
+//        double kmConvertion = 1.6093;
+//
+//        return String.format("%2f", new Float(distance * kmConvertion).floatValue()) + "km";
+//
+//    }
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -154,6 +177,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
         }
         else
         if (id==R.id.details){

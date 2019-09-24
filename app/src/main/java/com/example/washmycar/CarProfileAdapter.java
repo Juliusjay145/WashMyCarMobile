@@ -58,6 +58,7 @@ public class CarProfileAdapter extends BaseAdapter {
             handler = new CarProfileAdapter.CompanyHandler();
             handler.name =  arg1.findViewById(R.id.textView12);
             handler.image =  arg1.findViewById(R.id.imageView20);
+            handler.car_date =  arg1.findViewById(R.id.textView13);
             arg1.setTag(handler);
         }else
 
@@ -65,6 +66,7 @@ public class CarProfileAdapter extends BaseAdapter {
         Bitmap bm  = BitmapFactory.decodeFile(list.get(arg0).getImage());
         handler.name.setText(list.get(arg0).getName());
         handler.image.setImageBitmap(bm);
+        handler.car_date.setText(list.get(arg0).getDate());
 
 
 
@@ -92,7 +94,7 @@ public class CarProfileAdapter extends BaseAdapter {
 
     static class CompanyHandler
     {
-        TextView name;
+        TextView name,car_date;
         ImageView image;
     }
 

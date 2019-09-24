@@ -16,6 +16,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileData extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -36,8 +46,9 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     SharedPreferences prf;
     ArrayList<CarWashOwnerList> list = new ArrayList<>();
     CarWashOwnerAdapter adapter;
-    Button btnNext;
+    Button btnNext,btnFavor;
     TextView rateus;
+    InputStream is;
     private MenuItem item;
 
 
@@ -58,6 +69,9 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
         btnNext = findViewById(R.id.book1);
         btnNext.setOnClickListener(this);
 
+        btnFavor = findViewById(R.id.book2);
+        btnFavor.setOnClickListener(this);
+
         rateus = findViewById(R.id.star);
         rateus.setOnClickListener(this);
 
@@ -68,6 +82,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
         String customer_id = prf.getString("seeker_id", "");
         String stations_id = getIntent().getStringExtra("station_id");
         String stations_name = getIntent().getStringExtra("stat_name");
+        String wallet = getIntent().getStringExtra("wallet");
 
 
 
@@ -93,7 +108,8 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
                 String carwash_address = item.getString("station_address");
                 String carwash_telephone = item.getString("station_tele");
                 String carwash_desc = item.getString("station_description");
-                list.add(new CarWashOwnerList(CompanyImage,carwashId,carwash_name,carwash_address,carwash_telephone,carwash_desc));
+                String carwash_wallet = item.getString("station_wallet");
+                list.add(new CarWashOwnerList(CompanyImage,carwashId,carwash_name,carwash_address,carwash_telephone,carwash_desc,carwash_wallet));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -124,9 +140,29 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
         int id = item.getItemId();
+        if (id==R.id.maps){
+            Toast.makeText(this, "Maps", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MapsActivity.class));
+        }
+        else
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, DashBoard.class));
+            startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
+        if (id==R.id.vehicle){
+            Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){
@@ -138,7 +174,6 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "Thank you for Using Washmycar", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,MainActivity.class));
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -149,9 +184,11 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
       {
           String stations_id = getIntent().getStringExtra("station_id");
           String stations_name = getIntent().getStringExtra("stat_name");
+          String wallet = getIntent().getStringExtra("wallet");
           Intent intent = new Intent(this, CarWashStationService.class);
           intent.putExtra("stations_id", stations_id);
           intent.putExtra("st_name", stations_name);
+          intent.putExtra("wallet", wallet);
           startActivityForResult(intent, 1);
       }
 
@@ -162,6 +199,38 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
           intent.putExtra("stations_id", stations_id);
           startActivityForResult(intent, 1);
       }
+
+      if(view == btnFavor)
+      {
+          String stations_id = getIntent().getStringExtra("station_id");
+          String customer_id = prf.getString("seeker_id", "");
+
+          List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+          nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
+          try{
+              HttpClient httpClient = new DefaultHttpClient();
+              HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/AndroidController/add_favorites/"+ stations_id);
+              httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+              HttpResponse response = httpClient.execute(httpPost);
+              HttpEntity entity = response.getEntity();
+              is=entity.getContent();
+              Toast.makeText(getApplicationContext(), "Rated Successfully", Toast.LENGTH_SHORT).show();
+              Intent intent = new Intent(this, DashBoard.class);
+              startActivity(intent);
+
+          }
+          catch(ClientProtocolException e)
+          {
+              Log.e("ClientProtocol","Log_tag");
+              e.printStackTrace();
+          }
+          catch(IOException e)
+          {
+              Log.e("Log_tag", "IOException");
+              e.printStackTrace();
+          }
+      }
+
 
 
 

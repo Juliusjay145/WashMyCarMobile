@@ -3,12 +3,14 @@ package com.example.washmycar;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Rating;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -60,6 +62,8 @@ public class CompanyAdapter extends BaseAdapter {
             handler = new CompanyHandler();
             handler.name =  arg1.findViewById(R.id.textView);
             handler.image =  arg1.findViewById(R.id.imageView);
+            handler.rate = arg1.findViewById(R.id.ratingBar2);
+
             arg1.setTag(handler);
         }else
 
@@ -67,6 +71,7 @@ public class CompanyAdapter extends BaseAdapter {
         Bitmap bm  = getBitmapFromURL(list.get(arg0).getImage());
         handler.name.setText(list.get(arg0).getName());
         handler.image.setImageBitmap(bm);
+        handler.rate.setRating(list.get(arg0).getRate());
 
 
 
@@ -92,11 +97,16 @@ public class CompanyAdapter extends BaseAdapter {
         }
     }
 
+
+
     static class CompanyHandler
     {
         TextView name;
         ImageView image;
+        RatingBar rate;
     }
+
+
 
 
 

@@ -32,7 +32,7 @@ import java.net.URL;
 public class Profile extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
-    TextView name,email,address,phone;
+    TextView name,email,address,phone,wallet;
     ImageView img;
     Button btnUpdate,btnAdd;
     Uri uriImage;
@@ -54,6 +54,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         address = findViewById(R.id.txt_seeker_addr);
         phone = findViewById(R.id.txt_seeker_contact);
         img = findViewById(R.id.imageView12);
+        wallet = findViewById(R.id.txt_seeker_wallet);
         btnUpdate = findViewById(R.id.button);
         btnAdd = findViewById(R.id.button2);
         btnUpdate.setOnClickListener(this);
@@ -82,6 +83,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
                 String cnumber = item.getString("seeker_address");
                 String caddress = item.getString("seeker_telephone");
                 String picture = item.getString("seeker_image");
+                String seeker_wallet = item.getString("seeker_wallet");
                 //String cc = item.getString("client_contact");
                 //String ct = item.getString("client_contact");
 //	        	Toast.makeText(getApplicationContext(), cn, Toast.LENGTH_LONG).show();
@@ -90,6 +92,7 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
                 address.setText(cnumber);
                 phone.setText(caddress);
                 img.setImageBitmap(BitmapFactory.decodeFile(picture));
+                wallet.setText(seeker_wallet);
             }
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -123,6 +126,11 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemClic
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
         }
         else
         if (id==R.id.details){

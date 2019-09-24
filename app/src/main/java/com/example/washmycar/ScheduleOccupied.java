@@ -140,6 +140,11 @@ public class ScheduleOccupied extends AppCompatActivity implements AdapterView.O
             startActivity(new Intent(this,DashBoard.class));
         }
         else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
         if (id==R.id.details){
             Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,BookingDetails.class));

@@ -59,6 +59,8 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
         String price = getIntent().getStringExtra("price");
+        String pic = getIntent().getStringExtra("pic");
+        String wallet = getIntent().getStringExtra("wallet");
         Toast.makeText(getApplicationContext(), stationName, Toast.LENGTH_SHORT).show();
 
         try{
@@ -112,6 +114,8 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
         String schedule_id = getIntent().getStringExtra("schedule_id");
+        String wallet = getIntent().getStringExtra("wallet");
+        String pic = getIntent().getStringExtra("pic");
         Intent intent = new Intent(this, BookingTransaction.class);
         intent.putExtra("washboy_id", ID);
         intent.putExtra("station_id", sID);
@@ -124,6 +128,8 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         intent.putExtra("time", time);
         intent.putExtra("price", price);
         intent.putExtra("schedule_id", schedule_id);
+        intent.putExtra("pic", pic);
+        intent.putExtra("wallet", wallet);
         startActivityForResult(intent, 1);
     }
 
@@ -146,6 +152,16 @@ public class Washboy extends AppCompatActivity implements AdapterView.OnItemClic
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
+        }
+        else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
         }
         else
         if (id==R.id.vehicle){

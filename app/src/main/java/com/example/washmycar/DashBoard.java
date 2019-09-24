@@ -78,7 +78,11 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
                 String carwash_name = item.getString("station_name");
                 String carwashId = item.getString("station_id");
                 String CompanyImage = item.getString("path_image");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name));
+                String rating = item.getString("rating");
+                String wallet = item.getString("station_wallet");
+                String lon = item.getString("longitude");
+                String lat = item.getString("latitude");
+                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -110,7 +114,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
                 if(status.equals("ongoing"))
                 {
                     AlertDialog dialog = new AlertDialog.Builder(this).create();
-                    dialog.setMessage("Your reservation request has been accept");
+                    dialog.setMessage("Your reservation request has been accepted");
                     dialog.setTitle("Notification");
                     dialog.show();
                 }
@@ -145,7 +149,7 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
                 if(status.equals("decline"))
                 {
                     AlertDialog dialog = new AlertDialog.Builder(this).create();
-                    dialog.setMessage("Your reservation request has been decline");
+                    dialog.setMessage("Your reservation request has been declined");
                     dialog.setTitle("Notification");
                     dialog.show();
                 }
@@ -161,15 +165,18 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
 
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         CompanyList selectedItem = list.get(i);
         String ID = selectedItem.getId();
         String name = selectedItem.getName();
+        String wallet = selectedItem.getStation_wallet();
         Intent intent = new Intent(this, ProfileData.class);
         intent.putExtra("station_id", ID);
         intent.putExtra("stat_name", name);
+        intent.putExtra("wallet", wallet);
         startActivityForResult(intent, 1);
 
 
@@ -195,6 +202,11 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
         }
         else
         if (id==R.id.details){

@@ -1,8 +1,11 @@
 package com.example.washmycar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,43 +27,41 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
+public class MyFavorites extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView lv;
     SharedPreferences prf;
-    ArrayList<CarProfileList> list = new ArrayList<>();
-    CarProfileAdapter adapter;
+    ArrayList<CompanyList> list = new ArrayList<>();
+    CompanyAdapter adapter;
+
     private MenuItem item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vehicle);
+        setContentView(R.layout.activity_my_favorites);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.sample);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle("Choose Vehicle");
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
+
         this.lv = findViewById(R.id.ListView);
-        this.adapter = new CarProfileAdapter(this, list);
+        this.adapter = new CompanyAdapter(this, list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-        String ID = getIntent().getStringExtra("sta_id");
-        String serviceName = getIntent().getStringExtra("service_name");
-        String stationName = getIntent().getStringExtra("station_name");
-        String date = getIntent().getStringExtra("date");
-        String time = getIntent().getStringExtra("time");
-        String schedule_id = getIntent().getStringExtra("schedule_id");
-        String price = getIntent().getStringExtra("price");
-        //Toast.makeText(getApplicationContext(), stationName +"" + serviceName, Toast.LENGTH_SHORT).show();
+        getSupportActionBar().setTitle("Car Wash Stations");
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
+        StrictMode.setThreadPolicy(policy);
+
         String customer_id = prf.getString("seeker_id", "");
-        String wallet = getIntent().getStringExtra("wallet");
+
 
         try{
 //            URL url = new URL("http://192.168.43.118/washmycar/index.php/androidcontroller/get_carwash_station");
-            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_vehicle_owner/"+customer_id);
+            URL url = new URL("http://192.168.43.19/washmycar/index.php/androidcontroller/get_favorites/" + customer_id);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             InputStream is=conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -73,14 +72,15 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
 
             Log.d("json data", s);
             JSONObject json=new JSONObject(s);
-            JSONArray array = json.getJSONArray("cwseekervehicle");
+            JSONArray array = json.getJSONArray("cwowner_station");
             for(int i=0; i<array.length(); i++){
                 JSONObject item = array.getJSONObject(i);
-                String carwash_name = item.getString("cwsv_brand");
-                String carwashId = item.getString("cwsv_id");
-                String CompanyImage = item.getString("image_vehicle");
-                String car_date = item.getString("carwash_date");
-                list.add(new CarProfileList(CompanyImage,carwashId,carwash_name,car_date));
+                String carwash_name = item.getString("station_name");
+                String carwashId = item.getString("station_id");
+                String CompanyImage = item.getString("path_image");
+                String rating = item.getString("rating");
+                String wallet = item.getString("station_wallet");
+                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -94,43 +94,7 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
 
 
 
-
-
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        CarProfileList selectedItem = list.get(i);
-        String stationID = getIntent().getStringExtra("sta_id");
-        String stationName = getIntent().getStringExtra("station_name");
-        String serviceName = getIntent().getStringExtra("service_name");
-        String service_id = getIntent().getStringExtra("service_id");
-        String date = getIntent().getStringExtra("date");
-        String time = getIntent().getStringExtra("time");
-        String schedule_id = getIntent().getStringExtra("schedule_id");
-        String price = getIntent().getStringExtra("price");
-        String wallet = getIntent().getStringExtra("wallet");
-        String picVehicle = selectedItem.getImage();
-        String ID = selectedItem.getId();
-        Intent intent = new Intent(this, Washboy.class);
-        intent.putExtra("v_id", ID);
-        intent.putExtra("s_id", stationID);
-        intent.putExtra("s_name", stationName);
-        intent.putExtra("service_name", serviceName);
-        intent.putExtra("service_id", service_id);
-        intent.putExtra("date", date);
-        intent.putExtra("time", time);
-        intent.putExtra("schedule_id", schedule_id);
-        intent.putExtra("price", price);
-        intent.putExtra("pic", picVehicle);
-        intent.putExtra("wallet", wallet);
-        startActivityForResult(intent, 1);
-
-
-
-    }
-
 
     //menus
     @Override
@@ -138,6 +102,7 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         getMenuInflater().inflate(R.menu.commonmenus,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
@@ -157,9 +122,14 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
             startActivity(new Intent(this,MyFavorites.class));
         }
         else
+        if (id==R.id.details){
+            Toast.makeText(this, "My Details", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,BookingDetails.class));
+        }
+        else
         if (id==R.id.vehicle){
             Toast.makeText(this, "My Vehicle", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Vehicle.class));
+            startActivity(new Intent(this,Vehicle.class));
         }
         else
         if (id==R.id.settings){
@@ -173,6 +143,11 @@ public class MyVehicle extends AppCompatActivity implements AdapterView.OnItemCl
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 //    end of menu
 }

@@ -73,7 +73,8 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
                 String carwash_name = item.getString("cwsv_brand");
                 String carwashId = item.getString("cwsv_id");
                 String CompanyImage = item.getString("image_vehicle");
-                list.add(new CarProfileList(CompanyImage,carwashId,carwash_name));
+                String car_date = item.getString("carwash_date");
+                list.add(new CarProfileList(CompanyImage,carwashId,carwash_name,car_date));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -123,6 +124,11 @@ public class Vehicle extends AppCompatActivity implements AdapterView.OnItemClic
         if (id==R.id.home){
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,DashBoard.class));
+        }
+        else
+        if (id==R.id.favorites){
+            Toast.makeText(this, "My Favorites", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,MyFavorites.class));
         }
         else
         if (id==R.id.details){

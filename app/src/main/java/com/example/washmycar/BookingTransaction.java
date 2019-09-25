@@ -133,7 +133,10 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
         float lowprice = Float.parseFloat(temprice[0]);
         float discountprice = (float) (lowprice*.50);
         String finald = Float.toString(discountprice);
+        String service_lowprice = Float.toString(lowprice);
         amount.setText(finald);
+
+
 
         float station_wallet = Float.parseFloat(owallet);
         float overall_station_wallet = station_wallet + discountprice;
@@ -292,6 +295,8 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                 String finald = Float.toString(discountprice);
                 amount.setText(finald);
 
+                String service_lprice = Float.toString(lowprice);
+
                 float station_wallet = Float.parseFloat(owallet);
                 float overall_station_wallet = station_wallet + discountprice;
                 String amount_wallet = Float.toString(overall_station_wallet);
@@ -304,12 +309,6 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
 
                 else{
 
-                if(calendar.getTime().before(new Date()))
-                {
-                    Toast.makeText(getApplicationContext(), "Invalid Past Date", Toast.LENGTH_SHORT).show();
-                }
-
-                else{
                     List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                     nameValuePairs.add(new BasicNameValuePair("station_id", station_id));
                     nameValuePairs.add(new BasicNameValuePair("seeker_id", customer_id));
@@ -320,6 +319,7 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                     nameValuePairs.add(new BasicNameValuePair("seeker_time", t_time));
                     nameValuePairs.add(new BasicNameValuePair("seeker_name", customer_name));
                     nameValuePairs.add(new BasicNameValuePair("service_name", se_name));
+                    nameValuePairs.add(new BasicNameValuePair("service_lowprice", service_lprice));
                     nameValuePairs.add(new BasicNameValuePair("washboy_name", w_name));
                     nameValuePairs.add(new BasicNameValuePair("station_name", st_name));
                     nameValuePairs.add(new BasicNameValuePair("seeker_image", pic));
@@ -419,7 +419,37 @@ public class BookingTransaction extends AppCompatActivity implements AdapterView
                         e.printStackTrace();
                     }
 
-                }
+                    //update schedule
+                    try{
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://192.168.43.19/washmycar/index.php/androidcontroller/schedule_update/"+schedule_id);
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpResponse response = httpClient.execute(httpPost);
+                        HttpEntity entity = response.getEntity();
+                        is=entity.getContent();
+                        Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(this, BookingDetails.class);
+                        startActivity(intent1);
+                        //			txtname.setText("");
+                        //			address.setText(caddress);
+                        //			txtcontact.setText("");
+                        //			txtusername.setText("");
+                        //			txtpassword.setText("");
+
+
+                    }
+                    catch(ClientProtocolException e)
+                    {
+                        Log.e("ClientProtocol","Log_tag");
+                        e.printStackTrace();
+                    }
+                    catch(IOException e)
+                    {
+                        Log.e("Log_tag", "IOException");
+                        e.printStackTrace();
+                    }
+
+
 
                 }
 

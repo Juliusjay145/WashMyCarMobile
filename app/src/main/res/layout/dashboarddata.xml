@@ -48,7 +48,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="40dp"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="-88dp"
+                android:layout_marginBottom="40dp"
                 android:text="TextView"
                 android:textSize="20sp"
                 app:fontFamily="sans-serif-light" />

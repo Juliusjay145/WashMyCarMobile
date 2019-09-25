@@ -57,6 +57,7 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
         String customer_id = prf.getString("seeker_id", "");
         String stations_id = getIntent().getStringExtra("stations_id");
         String stations_name = getIntent().getStringExtra("st_name");
+        String wallet = getIntent().getStringExtra("wallet");
         Toast.makeText(getApplicationContext(), stations_name, Toast.LENGTH_SHORT).show();
 
         try{
@@ -107,7 +108,9 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
         String time = selectedItem.getTime();
         String stations_id = getIntent().getStringExtra("stations_id");
         String stations_name = getIntent().getStringExtra("st_name");
-        Toast.makeText(getApplicationContext(), stations_id, Toast.LENGTH_SHORT).show();
+
+        String wallet = getIntent().getStringExtra("wallet");
+        //Toast.makeText(getApplicationContext(), stations_id, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, CarWashStationService.class);
         intent.putExtra("v_id", ID);
         intent.putExtra("stations_id", stations_id);
@@ -115,6 +118,7 @@ public class Schedule extends AppCompatActivity implements AdapterView.OnItemCli
         intent.putExtra("time", time);
         intent.putExtra("schedule_id", ID);
         intent.putExtra("st_name", stations_name);
+        intent.putExtra("wallet", wallet);
         startActivityForResult(intent, 1);
 
 

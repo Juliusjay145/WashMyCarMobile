@@ -2,17 +2,18 @@ package com.example.washmycar;
 
 public class CompanyList {
 
-    private String image,id, name, station_wallet;
+    private String image,id, name, station_wallet,distance;
     private float rate;
 
 
-    public CompanyList(String image, String id, String name, float rate, String station_wallet) {
+    public CompanyList(String image, String id, String name, float rate, String station_wallet, String distance) {
         super();
         this.image = image;
         this.id = id;
         this.name = name;
         this.rate = rate;
         this.station_wallet = station_wallet;
+        this.distance = distance;
     }
 
     public float getRate() {
@@ -50,4 +51,12 @@ public class CompanyList {
     public String getStation_wallet() { return station_wallet; }
 
     public void  setStation_wallet(String desc) {  this.station_wallet = station_wallet; }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
 }

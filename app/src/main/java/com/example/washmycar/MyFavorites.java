@@ -80,7 +80,8 @@ public class MyFavorites extends AppCompatActivity implements AdapterView.OnItem
                 String CompanyImage = item.getString("path_image");
                 String rating = item.getString("rating");
                 String wallet = item.getString("station_wallet");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet));
+                String meter = item.getString("distance");
+                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet,meter));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){
@@ -147,6 +148,16 @@ public class MyFavorites extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        CompanyList selectedItem = list.get(i);
+        String ID = selectedItem.getId();
+        String name = selectedItem.getName();
+        String wallet = selectedItem.getStation_wallet();
+        Intent intent = new Intent(this, ProfileData.class);
+        intent.putExtra("station_id", ID);
+        intent.putExtra("stat_name", name);
+        intent.putExtra("wallet", wallet);
+        startActivityForResult(intent, 1);
 
     }
 //    end of menu

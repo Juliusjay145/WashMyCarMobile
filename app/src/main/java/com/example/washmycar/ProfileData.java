@@ -185,7 +185,7 @@ public class ProfileData extends AppCompatActivity implements View.OnClickListen
           String stations_id = getIntent().getStringExtra("station_id");
           String stations_name = getIntent().getStringExtra("stat_name");
           String wallet = getIntent().getStringExtra("wallet");
-          Intent intent = new Intent(this, CarWashStationService.class);
+          Intent intent = new Intent(this, Schedule.class);
           intent.putExtra("stations_id", stations_id);
           intent.putExtra("st_name", stations_name);
           intent.putExtra("wallet", wallet);

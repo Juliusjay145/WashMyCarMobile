@@ -82,7 +82,8 @@ public class DashBoard extends AppCompatActivity implements AdapterView.OnItemCl
                 String wallet = item.getString("station_wallet");
                 String lon = item.getString("longitude");
                 String lat = item.getString("latitude");
-                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet));
+                String meter = item.getString("distance");
+                list.add(new CompanyList(CompanyImage,carwashId,carwash_name,Float.parseFloat(rating),wallet,meter));
                 adapter.notifyDataSetChanged();
             }
         }catch (MalformedURLException e){

@@ -63,7 +63,7 @@ public class CompanyAdapter extends BaseAdapter {
             handler.name =  arg1.findViewById(R.id.textView);
             handler.image =  arg1.findViewById(R.id.imageView);
             handler.rate = arg1.findViewById(R.id.ratingBar2);
-
+            handler.distance =  arg1.findViewById(R.id.textView2);
             arg1.setTag(handler);
         }else
 
@@ -72,6 +72,7 @@ public class CompanyAdapter extends BaseAdapter {
         handler.name.setText(list.get(arg0).getName());
         handler.image.setImageBitmap(bm);
         handler.rate.setRating(list.get(arg0).getRate());
+        handler.distance.setText(list.get(arg0).getDistance());
 
 
 
@@ -101,7 +102,7 @@ public class CompanyAdapter extends BaseAdapter {
 
     static class CompanyHandler
     {
-        TextView name;
+        TextView name,distance;
         ImageView image;
         RatingBar rate;
     }
